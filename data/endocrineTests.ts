@@ -336,12 +336,12 @@ export const endocrineTests: EndocrineTest[] = [
   {
     id: "crh-test",
     name: "CRH試験",
-    tagline: "副腎不全の「どこが原因か」を鑑別する",
+    tagline: "副腎不全の「どこが原因か」を鑑別する【三者負荷試験の1つ】",
     essence: "下垂体のACTH分泌能",
     color: "teal",
     category: "副腎・HPA軸",
     status: "available",
-    what: "外からCRHを投与して下垂体がACTHを十分に分泌できるかを評価する。迅速ACTH試験で副腎不全が確認された後、原因が「下垂体性」か「視床下部性」かを鑑別するために用いる。",
+    what: "外からCRHを投与して下垂体がACTHを十分に分泌できるかを評価する。迅速ACTH試験で副腎不全が確認された後、原因が「下垂体性」か「視床下部性」かを鑑別するために用いる。実臨床では TRH・GnRH と同時に投与する「三者負荷試験（CRH＋TRH＋GnRH）」として行うことが多く、下垂体の複数軸を1回の試験で一括評価できる。",
     indications: [
       "副腎不全の原因鑑別（視床下部性 vs 下垂体性）",
       "クッシング症候群の局在診断補助（IPSS施行前）",
@@ -575,12 +575,12 @@ export const endocrineTests: EndocrineTest[] = [
   {
     id: "trh-test",
     name: "TRH試験",
-    tagline: "中枢性甲状腺機能低下症の原因を鑑別する",
+    tagline: "中枢性甲状腺機能低下症の原因を鑑別する【三者負荷試験の1つ】",
     essence: "下垂体TSH分泌能",
     color: "emerald",
     category: "甲状腺・HPT軸",
     status: "available",
-    what: "TRHを投与して下垂体のTSH分泌能を評価する。甲状腺機能低下症の原因が「下垂体性」か「視床下部性」かを鑑別するために用いる。",
+    what: "TRHを投与して下垂体のTSH分泌能を評価する。甲状腺機能低下症の原因が「下垂体性」か「視床下部性」かを鑑別するために用いる。実臨床では CRH・GnRH と同時に投与する「三者負荷試験（CRH＋TRH＋GnRH）」として行うことが多く、下垂体の複数軸を1回の試験で一括評価できる。",
     indications: [
       "中枢性甲状腺機能低下症の鑑別（視床下部性 vs 下垂体性）",
       "下垂体機能低下症の評価（TRHによるPRL過剰分泌評価も可）",
@@ -753,12 +753,12 @@ export const endocrineTests: EndocrineTest[] = [
   {
     id: "gnrh-test",
     name: "GnRH（LH-RH）試験",
-    tagline: "性腺機能低下症の原因を鑑別する",
+    tagline: "性腺機能低下症の原因を鑑別する【三者負荷試験の1つ】",
     essence: "下垂体LH/FSH分泌能",
     color: "rose",
     category: "性腺軸",
     status: "available",
-    what: "GnRHを投与して下垂体からのLH・FSH分泌能を評価する。性腺機能低下症が「下垂体性」か「視床下部性」かを鑑別する。",
+    what: "GnRHを投与して下垂体からのLH・FSH分泌能を評価する。性腺機能低下症が「下垂体性」か「視床下部性」かを鑑別する。実臨床では CRH・TRH と同時に投与する「三者負荷試験（CRH＋TRH＋GnRH）」として行うことが多く、下垂体の複数軸を1回の試験で一括評価できる。",
     indications: [
       "性腺機能低下症の原因鑑別（下垂体性 vs 視床下部性）",
       "思春期遅発症・無月経・不妊の精査",
