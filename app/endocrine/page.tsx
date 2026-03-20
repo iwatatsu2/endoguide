@@ -2,7 +2,7 @@ import { endocrineTests } from "@/data/endocrineTests";
 import TestCard from "@/components/endocrine/TestCard";
 
 export const metadata = {
-  title: "EndoGuide – Endocrine Stimulation Tests",
+  title: "EndoCompass – Endocrine Stimulation Tests",
   description: "Quick reference for residents. Endocrine loading tests at a glance.",
 };
 
@@ -16,10 +16,10 @@ export default function EndocrinePage() {
           <div className="flex items-end justify-between">
             <div>
               <p className="text-xs font-bold tracking-[0.2em] text-blue-400 uppercase mb-1">
-                Endocrine · Loading Tests
+                Endocrine · Loading Tests · v1.0
               </p>
               <h1 className="text-3xl font-black text-white tracking-tight">
-                Endo<span className="text-blue-400">Guide</span>
+                Endo<span className="text-blue-400">Compass</span>
               </h1>
             </div>
             <div className="text-right">
