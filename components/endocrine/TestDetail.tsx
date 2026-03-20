@@ -96,7 +96,7 @@ export default function TestDetail({ test }: { test: EndocrineTest }) {
         <Card id="sec-what">
           <SectionTitle emoji="🧬" title="この検査は何を見ている？" />
           <HormoneFlow
-            axis={test.hormoneFlow.axis}
+            axisKey={test.hormoneFlow.axisKey}
             highlightTarget={test.hormoneFlow.highlightTarget}
             mechanismLabel={test.hormoneFlow.mechanismLabel}
           />

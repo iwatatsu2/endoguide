@@ -1,0 +1,33 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Patient {
+  id        String   @id @default(cuid())
+  name      String
+  weight    Float
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  exerciseLogs ExerciseLog[]
+}
+
+model ExerciseLog {
+  id           String       @id @default(cuid())
+  patientId    String
+  date         DateTime
+  exerciseType String
+  duration     Int?
+  steps        Int?
+  sets         Int?
+  achieved     Boolean      @default(false)
+  note         String?
+  createdAt    DateTime     @default(now())
+
+  patient Patient @relation(fields: [patientId], references: [id])
+}

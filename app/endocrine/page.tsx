@@ -1,4 +1,4 @@
-import { endocrineTests } from "@/data/endocrineTests";
+import { endocrineTests, TestCategory } from "@/data/endocrineTests";
 import TestCard from "@/components/endocrine/TestCard";
 
 export const metadata = {
@@ -6,7 +6,35 @@ export const metadata = {
   description: "Quick reference for residents. Endocrine loading tests at a glance.",
 };
 
+const CATEGORY_META: Record<TestCategory, { icon: string; axis: string }> = {
+  "副腎・HPA軸":    { icon: "🧠", axis: "HPA axis" },
+  "甲状腺・HPT軸":  { icon: "🦋", axis: "HPT axis" },
+  "成長ホルモン軸": { icon: "📈", axis: "GH axis" },
+  "性腺軸":         { icon: "🔬", axis: "HPG axis" },
+  "ADH・水代謝":    { icon: "💧", axis: "ADH axis" },
+  "膵臓・血糖":     { icon: "🩸", axis: "Pancreas" },
+};
+
+const CATEGORY_ORDER: TestCategory[] = [
+  "副腎・HPA軸",
+  "甲状腺・HPT軸",
+  "成長ホルモン軸",
+  "性腺軸",
+  "ADH・水代謝",
+  "膵臓・血糖",
+];
+
 export default function EndocrinePage() {
+  const grouped = CATEGORY_ORDER.reduce<Record<TestCategory, typeof endocrineTests[0][]>>(
+    (acc, cat) => {
+      acc[cat] = endocrineTests.filter((t) => t.category === cat);
+      return acc;
+    },
+    {} as Record<TestCategory, typeof endocrineTests[0][]>
+  );
+
+  let globalIndex = 0;
+
   return (
     <div className="min-h-screen bg-gray-950">
 
@@ -16,38 +44,53 @@ export default function EndocrinePage() {
           <div className="flex items-end justify-between">
             <div>
               <p className="text-xs font-bold tracking-[0.2em] text-blue-400 uppercase mb-1">
-                Endocrine · Loading Tests · v1.0
+                Endocrine · Loading Tests
               </p>
               <h1 className="text-3xl font-black text-white tracking-tight">
                 Endo<span className="text-blue-400">Compass</span>
               </h1>
             </div>
-            <div className="text-right">
-              <span className="inline-block bg-blue-500/10 border border-blue-500/30 text-blue-400 text-xs font-semibold px-2.5 py-1 rounded-full">
-                for Residents
-              </span>
-            </div>
+            <span className="bg-blue-500/10 border border-blue-500/30 text-blue-400 text-xs font-semibold px-2.5 py-1 rounded-full">
+              for Residents
+            </span>
           </div>
-          <p className="text-gray-500 text-sm mt-2">
-            Bedside reference · Tap to review before the test
+          <p className="text-gray-500 text-xs mt-2">
+            {endocrineTests.filter(t => t.status === "available").length} tests available · Tap to review
           </p>
         </div>
       </div>
 
-      {/* ── 検査リスト ── */}
-      <div className="px-4 py-5 space-y-3 max-w-lg mx-auto pb-16">
+      {/* ── カテゴリ別リスト ── */}
+      <div className="px-4 py-5 max-w-lg mx-auto pb-16 space-y-6">
+        {CATEGORY_ORDER.map((category) => {
+          const tests = grouped[category];
+          if (!tests || tests.length === 0) return null;
+          const meta = CATEGORY_META[category];
 
-        <p className="text-xs font-semibold text-gray-600 uppercase tracking-widest px-1 mb-4">
-          Select a test
-        </p>
+          return (
+            <div key={category}>
+              {/* カテゴリヘッダー */}
+              <div className="flex items-center gap-2 mb-3 px-1">
+                <span className="text-base">{meta.icon}</span>
+                <div>
+                  <p className="text-xs font-black text-white tracking-wide">{category}</p>
+                  <p className="text-xs text-gray-600">{meta.axis}</p>
+                </div>
+              </div>
 
-        {endocrineTests.map((test, i) => (
-          <TestCard key={test.id} test={test} index={i} />
-        ))}
+              <div className="space-y-2.5">
+                {tests.map((test) => {
+                  const idx = globalIndex++;
+                  return <TestCard key={test.id} test={test} index={idx} />;
+                })}
+              </div>
+            </div>
+          );
+        })}
 
-        <p className="text-xs text-gray-600 text-center pt-6 px-4 leading-relaxed">
+        <p className="text-xs text-gray-600 text-center pt-4 px-4 leading-relaxed">
           Reference values may vary by institution.<br />
-          Always follow your facility's protocol.
+          Always follow your facility&apos;s protocol.
         </p>
       </div>
     </div>
