@@ -948,12 +948,11 @@ export const endocrineTests: EndocrineTest[] = [
     timeline: [
       { time: "0分", action: "採血（血糖・C-peptide）", isKey: true },
       { time: "0分", action: "グルカゴン 1mg IM（または SC）投与", isKey: true },
-      { time: "2分", action: "採血（C-peptide）", isKey: true },
       { time: "6分", action: "採血（C-peptide）", isKey: true },
     ],
     judgments: [
       {
-        parameter: "C-peptide頂値（2 or 6分）",
+        parameter: "C-peptide頂値（6分）",
         unit: "ng/mL", threshold: "0.5", isNormalAbove: true,
         normalLabel: "β細胞残存分泌あり",
         abnormalLabel: "β細胞残存なし（絶対的インスリン不足）",
@@ -970,8 +969,7 @@ export const endocrineTests: EndocrineTest[] = [
     contraindications: ["インスリノーマ疑い", "褐色細胞腫疑い", "重篤な心疾患"],
     pitfalls: [
       "インスリンではなくCペプチドを測定する → 外因性インスリン注射の影響を受けない",
-      "6分値が2分値より高いことも多い → 必ず両方測定して頂値で評価",
-      "空腹時C-peptide<0.1ng/mLなら試験不要（β細胞消失は明らか）",
+"空腹時C-peptide<0.1ng/mLなら試験不要（β細胞消失は明らか）",
     ],
     reportPhrase: "グルカゴン負荷試験でC-peptide頂値が ___ng/mL と【β細胞残存あり／なし】でした。",
     hormoneFlow: {
