@@ -7,16 +7,20 @@ export const metadata = {
 };
 
 const CATEGORY_META: Record<TestCategory, { icon: string; axis: string }> = {
-  "副腎・HPA軸":    { icon: "🧠", axis: "HPA axis" },
-  "甲状腺・HPT軸":  { icon: "🦋", axis: "HPT axis" },
-  "成長ホルモン軸": { icon: "📈", axis: "GH axis" },
-  "性腺軸":         { icon: "🔬", axis: "HPG axis" },
-  "ADH・水代謝":    { icon: "💧", axis: "ADH axis" },
-  "膵臓・血糖":     { icon: "🩸", axis: "Pancreas" },
+  "副腎・HPA軸":       { icon: "🧠", axis: "HPA axis" },
+  "副腎・褐色細胞腫":  { icon: "🔴", axis: "Catecholamine" },
+  "副腎・アルドステロン": { icon: "🧂", axis: "RAAS axis" },
+  "甲状腺・HPT軸":     { icon: "🦋", axis: "HPT axis" },
+  "成長ホルモン軸":    { icon: "📈", axis: "GH axis" },
+  "性腺軸":            { icon: "🔬", axis: "HPG axis" },
+  "ADH・水代謝":       { icon: "💧", axis: "ADH axis" },
+  "膵臓・血糖":        { icon: "🩸", axis: "Pancreas" },
 };
 
 const CATEGORY_ORDER: TestCategory[] = [
   "副腎・HPA軸",
+  "副腎・褐色細胞腫",
+  "副腎・アルドステロン",
   "甲状腺・HPT軸",
   "成長ホルモン軸",
   "性腺軸",

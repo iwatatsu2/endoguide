@@ -1,5 +1,5 @@
 // ─── 軸ノード定義 ──────────────────────────────────────
-export type AxisKey = "HPA" | "HPT" | "GH" | "HPG" | "ADH" | "Pancreas";
+export type AxisKey = "HPA" | "HPT" | "GH" | "HPG" | "ADH" | "Pancreas" | "Catecholamine" | "RAAS";
 
 export interface AxisNodeConfig {
   id: string;
@@ -38,11 +38,23 @@ export const AXES: Record<AxisKey, AxisNodeConfig[]> = {
     { id: "beta_cell",  label: "膵β細胞",   hormone: "分泌" },
     { id: "c_peptide",  label: "インスリン\n/Cペプチド", hormone: "評価" },
   ],
+  Catecholamine: [
+    { id: "adrenal_medulla",    label: "副腎髄質",      hormone: "カテコラミン" },
+    { id: "plasma",             label: "血中循環",      hormone: "代謝" },
+    { id: "urine_metabolites",  label: "尿中メタネフリン", hormone: "定量" },
+  ],
+  RAAS: [
+    { id: "kidney_jga",    label: "傍糸球体装置",   hormone: "レニン" },
+    { id: "angiotensin",   label: "アンジオテンシン", hormone: "AngII" },
+    { id: "adrenal_zona",  label: "副腎球状層",     hormone: "アルドステロン" },
+  ],
 };
 
 // ─── 検査カテゴリ ───────────────────────────────────────
 export type TestCategory =
   | "副腎・HPA軸"
+  | "副腎・褐色細胞腫"
+  | "副腎・アルドステロン"
   | "甲状腺・HPT軸"
   | "成長ホルモン軸"
   | "性腺軸"
@@ -203,10 +215,121 @@ export const endocrineTests: EndocrineTest[] = [
       "陽性＝クッシングではない。感度優先の検査のため偽陽性が多い",
       "採血時刻が9時を過ぎると日内変動で偽陽性になりやすい",
     ],
-    reportPhrase: "デキサメタゾン抑制試験でコルチゾールが ___μg/dL と【抑制あり／抑制不十分】でした。",
+    reportPhrase: "1mg デキサメタゾン抑制試験でコルチゾールが ___μg/dL と【抑制あり／抑制不十分】でした。",
     hormoneFlow: {
       axisKey: "HPA", highlightTarget: "feedback",
-      mechanismLabel: "DEXがフィードバックを模倣\n→ 正常なら抑制される経路を評価",
+      mechanismLabel: "DEX 1mgがフィードバックを模倣\n→ クッシング症候群のスクリーニング",
+    },
+  },
+
+  {
+    id: "high-dose-dst",
+    name: "大量デキサメタゾン抑制試験（8mg DST）",
+    tagline: "クッシング病と異所性ACTH症候群を鑑別する",
+    essence: "ACTHの産生部位（下垂体 vs 異所性）",
+    color: "violet",
+    category: "副腎・HPA軸",
+    status: "available",
+    what: "8mgのDEXを投与し、コルチゾールが抑制されるかどうかで過剰ACTHの産生部位を鑑別する。下垂体腺腫（クッシング病）は大量DEXでも抑制されるが、異所性ACTH産生腫瘍は抑制されない。1mg DSTでスクリーニング陽性 → 本試験で局在診断という流れで使用。",
+    indications: [
+      "クッシング症候群のACTH依存性確認後の局在診断",
+      "クッシング病（下垂体性）vs 異所性ACTH症候群の鑑別",
+      "副腎偶発腫瘍でACTH高値の精査",
+    ],
+    preparations: [
+      "2日法（標準）: デキサメタゾン 0.5mg ×6時間毎 ×2日間（計4mg）投与後、コルチゾール採血",
+      "一夜法: 前日23時にDEX 8mgを内服 → 翌朝8時採血（簡便だが偽陽性あり）",
+      "ベースラインのコルチゾール・ACTH・UFC（24h蓄尿）を確認",
+      "CYP3A4誘導薬は中止または影響を考慮する",
+    ],
+    timeline: [
+      { time: "Day 1–2", action: "DEX 0.5mg ×6時間毎 ×2日間を内服（2日法）", isKey: true, note: "一夜法の場合: Day 1の23時にDEX 8mg単回内服" },
+      { time: "Day 3 朝", action: "採血（コルチゾール・ACTH）", isKey: true },
+      { time: "必要時", action: "UFC（24h蓄尿）をDEX前後で比較", note: "感度・特異度向上のため" },
+    ],
+    judgments: [
+      {
+        parameter: "コルチゾール抑制率（DEX前後比較）",
+        unit: "%", threshold: "50", isNormalAbove: true,
+        normalLabel: "クッシング病（下垂体性）",
+        abnormalLabel: "異所性ACTH or 副腎腫瘍",
+        note: "抑制率≥50%でクッシング病を示唆（感度83%程度）。確定にはIPSS（下錐体静脈洞サンプリング）が必要",
+      },
+    ],
+    normalInterpretation: "コルチゾールが≥50%抑制 → 下垂体腺腫は高用量DEXに反応する → クッシング病を示唆。MRI・IPSSへ進む。",
+    abnormalInterpretation: "抑制なし → 異所性ACTH産生腫瘍（肺カルチノイド・胸腺腫など）または副腎自律腫瘍を疑う。CT/FDG-PETで腫瘍探索。",
+    cautions: [
+      "1mg DSTで陽性確認済みの患者に実施する（スクリーニングには使わない）",
+      "感度・特異度ともに完全ではない → IPSS（侵襲的）が確定診断の標準",
+      "抑制ありでも異所性ACTHが完全に除外できない（偽陽性）",
+      "2日法の方が一夜法より再現性が高い",
+    ],
+    contraindications: [],
+    pitfalls: [
+      "1mg DSTと8mg DSTの目的が異なる: 1mgはスクリーニング（感度優先）、8mgは鑑別（特異度を上げる目的）",
+      "下垂体MRIが陰性でもクッシング病は除外できない（微小腺腫は見えないことが多い）",
+      "抑制率の計算はベースライン採血時刻を統一して行う",
+    ],
+    reportPhrase: "8mg DEX試験でコルチゾールが ___μg/dL（___% 抑制）と【下垂体性示唆／抑制不十分】でした。",
+    hormoneFlow: {
+      axisKey: "HPA", highlightTarget: "feedback",
+      mechanismLabel: "大量DEX（8mg）で\n下垂体 vs 異所性ACTHを鑑別",
+    },
+  },
+
+  {
+    id: "24h-ufc",
+    name: "24時間蓄尿遊離コルチゾール（UFC）",
+    tagline: "1日のコルチゾール総産生量を客観的に評価する",
+    essence: "副腎からのコルチゾール過剰産生",
+    color: "teal",
+    category: "副腎・HPA軸",
+    status: "available",
+    what: "24時間の尿を全量採取し、尿中に排泄される遊離コルチゾールを定量する。日内変動の影響を受けず、クッシング症候群のスクリーニング検査として1mg DSTと並んで推奨されている。投薬なしで実施できる非侵襲的な確認試験。",
+    indications: [
+      "クッシング症候群の診断（スクリーニング）",
+      "1mg DST陽性後の確認検査",
+      "クッシング症候群治療後のモニタリング",
+    ],
+    preparations: [
+      "採尿開始時刻に排尿して捨て、以後の全尿を専用容器に24時間採取（採尿終了時も排尿して加える）",
+      "採尿容器は遮光・冷蔵保存（施設の指示に従う）",
+      "採尿量（mL）を必ず記録する",
+      "採尿中は激しい運動・ストレス・急性疾患を避ける",
+    ],
+    timeline: [
+      { time: "Day 1 朝（例: 7:00）", action: "排尿して捨てる（採尿開始）", isKey: true },
+      { time: "Day 1 7:00 ～ Day 2 7:00", action: "以降の全尿を採尿容器に貯める", isKey: true },
+      { time: "Day 2 朝（例: 7:00）", action: "最終排尿を採尿容器に加えて採尿終了", isKey: true },
+      { time: "採尿終了後", action: "総尿量記録 → 検体提出（UFC・尿クレアチニン測定）", isKey: true },
+    ],
+    judgments: [
+      {
+        parameter: "UFC（尿中遊離コルチゾール）",
+        unit: "μg/day", threshold: "正常上限×3", isNormalAbove: false,
+        normalLabel: "クッシング症候群は否定的",
+        abnormalLabel: "クッシング症候群強く疑う",
+        note: "正常上限×1〜3倍はпсевдо（偽性）クッシング（肥満・うつ・飲酒）との重なり多い。×3以上で確定的",
+      },
+    ],
+    normalInterpretation: "UFC正常範囲 → コルチゾール過剰産生はない。ただし周期性クッシングでは偽陰性あり → 繰り返し測定を検討。",
+    abnormalInterpretation: "UFC高値（正常上限×3超） → コルチゾール過剰産生を確認。原因（下垂体/副腎/異所性）の精査へ進む。",
+    cautions: [
+      "採尿不完全が最多の誤差原因 → 尿クレアチニンで採尿完全性を確認する（体重1kgあたり約15-20mg/day）",
+      "腎機能低下（GFR<60）では偽低値になりやすい",
+      "うつ病・アルコール多飲・肥満・過度なストレスでは偽高値（疑似クッシング）",
+      "スクリーニングとして最低2回施行が推奨（変動が大きいため）",
+    ],
+    contraindications: [],
+    pitfalls: [
+      "正常上限の1〜3倍はグレーゾーン → 深夜唾液コルチゾール・1mg DSTと組み合わせて判断",
+      "採尿量が少ない（<500mL/day or 尿クレアチニン低値）は再検を要する",
+      "UFCが正常でもクッシング症候群を完全に除外できない（特に周期性タイプ）",
+    ],
+    reportPhrase: "24時間UFC ___μg/dayで【正常範囲／正常上限×___倍の高値】でした。尿量 ___mL/day。",
+    hormoneFlow: {
+      axisKey: "HPA", highlightTarget: "adrenal",
+      mechanismLabel: "副腎からのコルチゾール過剰分泌を\n24時間尿量で客観的に定量",
     },
   },
 
@@ -340,6 +463,190 @@ export const endocrineTests: EndocrineTest[] = [
     hormoneFlow: {
       axisKey: "HPA", highlightTarget: "hypothalamus",
       mechanismLabel: "低血糖で視床下部全体を刺激\nGH・コルチゾール両方を同時評価",
+    },
+  },
+
+  // ════════════════════════════════
+  // 副腎・褐色細胞腫
+  // ════════════════════════════════
+  {
+    id: "urine-metanephrine",
+    name: "酸性蓄尿メタネフリン・ノルメタネフリン",
+    tagline: "褐色細胞腫・パラガングリオーマを尿検査でスクリーニングする",
+    essence: "副腎髄質カテコラミン過剰産生",
+    color: "red",
+    category: "副腎・褐色細胞腫",
+    status: "available",
+    what: "褐色細胞腫やパラガングリオーマが産生するカテコラミン（アドレナリン・ノルアドレナリン）は体内で代謝されてメタネフリン・ノルメタネフリンとなり尿中に排泄される。24時間尿を酸性化して採取し定量することで腫瘍の存在を推定する。血漿遊離メタネフリンとの組み合わせが診断精度を高める。",
+    indications: [
+      "高血圧（特に発作性・難治性・若年性）の精査",
+      "褐色細胞腫が疑われる症状（頭痛・動悸・発汗の三徴）",
+      "副腎偶発腫瘍（インシデンタローマ）の機能評価",
+      "MEN2・VHL・SDH変異などの遺伝性症候群スクリーニング",
+    ],
+    preparations: [
+      "採尿容器に塩酸（HCl）20mLをあらかじめ入れて酸性化（pH<3維持）",
+      "24時間蓄尿（採尿方法はUFCと同様）",
+      "採尿中の薬剤確認: カテコラミン・メチルドパ・ラベタロール・β遮断薬は結果に影響",
+      "採尿前48時間はバナナ・チーズ・チョコレート・カフェイン・タバコを避ける",
+    ],
+    timeline: [
+      { time: "Day 1 朝", action: "排尿して捨て、酸性化済み採尿容器に24時間蓄尿開始", isKey: true },
+      { time: "Day 2 朝", action: "採尿完了。総尿量記録 → 速やかに提出（常温放置厳禁）", isKey: true },
+    ],
+    judgments: [
+      {
+        parameter: "尿中メタネフリン or ノルメタネフリン",
+        unit: "（正常上限比）", threshold: "正常上限×2", isNormalAbove: false,
+        normalLabel: "褐色細胞腫は否定的",
+        abnormalLabel: "褐色細胞腫・PGL 疑い",
+        note: "正常上限×2〜3以上で感度・特異度ともに高い。境界域は繰り返し測定・血漿遊離メタネフリンで確認",
+      },
+    ],
+    normalInterpretation: "メタネフリン・ノルメタネフリンともに正常範囲 → 褐色細胞腫の可能性は低い。ただし間欠性分泌腫瘍では偽陰性あり。",
+    abnormalInterpretation: "高値 → 褐色細胞腫・パラガングリオーマを疑い、CT/MRI・MIBG/PETシンチで局在診断へ。降圧治療（α遮断薬先行）の準備を始める。",
+    cautions: [
+      "手術・処置・侵襲的検査の前には血圧コントロールが必須（クリーゼ予防）",
+      "β遮断薬単独使用は禁忌（α未遮断下でのβ遮断はパラドキシカル高血圧）",
+      "採尿の酸性化が不十分だとメタネフリンが分解され偽低値になる",
+      "急性疾患・重篤なストレス状態では偽高値になりやすい",
+    ],
+    contraindications: [],
+    stopCriteria: [],
+    pitfalls: [
+      "三徴（頭痛・動悸・発汗）がなくても褐色細胞腫は存在する（無症候性は30%以上）",
+      "尿クレアチニンで採尿完全性を必ず確認する",
+      "採尿期間中に高血圧発作があった場合の採尿が最も診断価値が高い",
+      "血漿遊離メタネフリンの方が感度が高い → 強く疑う場合は血漿測定を優先",
+    ],
+    reportPhrase: "酸性蓄尿でメタネフリン ___μg/day・ノルメタネフリン ___μg/dayと【正常範囲／高値（正常上限×___倍）】でした。",
+    hormoneFlow: {
+      axisKey: "Catecholamine", highlightTarget: "urine_metabolites",
+      mechanismLabel: "副腎髄質のカテコラミン過剰産生を\n尿中代謝産物（メタネフリン類）で定量",
+    },
+  },
+
+  // ════════════════════════════════
+  // 副腎・アルドステロン
+  // ════════════════════════════════
+  {
+    id: "captopril-test",
+    name: "カプトプリル負荷試験（原発性アルドステロン症）",
+    tagline: "ACE阻害薬でアルドステロン自律分泌を確認する",
+    essence: "アルドステロン分泌の自律性（RAAS抑制への反応）",
+    color: "sky",
+    category: "副腎・アルドステロン",
+    status: "available",
+    what: "カプトプリル（ACE阻害薬）を投与してアンジオテンシンIIを低下させる。正常ではアルドステロンが抑制されるが、原発性アルドステロン症（PA）では腫瘍・過形成がアンジオテンシン非依存的にアルドステロンを分泌し続けるため抑制されない。外来で実施可能な簡便な確認試験。",
+    indications: [
+      "高血圧＋低K血症でPAを疑う場合のスクリーニング確認",
+      "ARR（アルドステロン/レニン比）高値後の確認試験",
+      "生理食塩水負荷試験の代替（外来・禁忌症例）",
+    ],
+    preparations: [
+      "座位30分後に採血（座位で実施する）",
+      "カリウム補正は試験前に行う（低K血症はアルドステロン分泌を偽抑制する）",
+      "スピロノラクトン・エプレレノン・利尿薬は4週間前から中止",
+      "ACE阻害薬・ARB・DHP-Ca拮抗薬・β遮断薬の影響を考慮する",
+    ],
+    timeline: [
+      { time: "0分（座位）", action: "採血（PAC・PRA・血清K）", isKey: true },
+      { time: "0分",        action: "カプトプリル 25〜50mg 内服", isKey: true },
+      { time: "60分（座位）", action: "採血（PAC・PRA）", isKey: true },
+      { time: "120分（座位）", action: "採血（PAC・PRA）", isKey: true, note: "施設により60分 or 90分のみの場合あり" },
+    ],
+    judgments: [
+      {
+        parameter: "負荷後 PAC（血漿アルドステロン濃度）",
+        unit: "ng/dL", threshold: "15", isNormalAbove: false,
+        normalLabel: "抑制あり（PAは否定的）",
+        abnormalLabel: "PAC≥15 → PA疑い",
+        note: "PAC/PRA比≥200も同時に確認する。施設基準（pg/mL表記では×10に換算）",
+      },
+    ],
+    normalInterpretation: "カプトプリルによりAngII↓ → アルドステロンが正常に抑制 → PAは否定的。",
+    abnormalInterpretation: "アルドステロンが抑制されない（PAC≥15ng/dL or 比率高値） → PA確認試験陽性。副腎CT・AVS（副腎静脈サンプリング）へ進む。",
+    cautions: [
+      "初回内服後30〜60分は血圧低下に注意（特に高齢者・脱水）",
+      "座位を保つことが条件 → 臥位では結果が変わる",
+      "ACE阻害薬への過敏症（血管浮腫歴）は禁忌",
+      "腎機能低下では血清K上昇に注意",
+    ],
+    contraindications: ["ACE阻害薬アレルギー（血管浮腫歴）", "妊娠"],
+    stopCriteria: ["著明な血圧低下（収縮期血圧<90mmHg）"],
+    pitfalls: [
+      "PAC/PRA比は測定キット・採血条件（安静・座位・時刻）で大きく変動する",
+      "スピロノラクトン内服中はレニンが高値となりARR偽低値になる → 必ず中止期間を確認",
+      "生理食塩水試験よりやや感度が低い → 陰性でも臨床的に疑う場合は追加検査",
+    ],
+    reportPhrase: "カプトプリル試験で負荷後PAC ___ng/dL・PAC/PRA比 ___と【抑制あり／抑制不十分（PA疑い）】でした。",
+    hormoneFlow: {
+      axisKey: "RAAS", highlightTarget: "adrenal_zona",
+      mechanismLabel: "カプトプリルでAngIIを抑制 →\n正常ならアルドステロン↓、PAなら抑制されない",
+    },
+  },
+
+  {
+    id: "saline-infusion-pa",
+    name: "生理食塩水負荷試験（原発性アルドステロン症）",
+    tagline: "最も信頼性の高いアルドステロン確認試験",
+    essence: "循環血漿量増加によるアルドステロン抑制能",
+    color: "emerald",
+    category: "副腎・アルドステロン",
+    status: "available",
+    what: "2Lの生理食塩水を4時間かけて点滴し、循環血漿量を増加させてレニン・アルドステロン分泌を抑制する。正常ではアルドステロンが著明に低下するが、PAでは抑制されない。感度・特異度ともに高く国内外のガイドラインで推奨されている標準的確認試験。",
+    indications: [
+      "ARR高値後の確認試験（最も推奨される方法）",
+      "カプトプリル試験陽性後の最終確認",
+      "PA確定診断が必要な場合（AVSに進む前の確定）",
+    ],
+    preparations: [
+      "前日夜から絶食（朝食なし）",
+      "試験中は臥位（仰臥位）を保つ",
+      "低K血症は補正してから実施",
+      "心不全・重篤な高血圧（≥160/100mmHg）では禁忌 → カプトプリル試験を選択",
+      "スピロノラクトン・利尿薬は4週間前から中止",
+    ],
+    timeline: [
+      { time: "0分（臥位）", action: "採血（PAC・PRA・血清K・コルチゾール）", isKey: true },
+      { time: "0分",        action: "生理食塩水 2L を4時間で点滴開始（500mL/h）", isKey: true, note: "点滴中は臥位保持・バイタル定期確認" },
+      { time: "60分",       action: "血圧・脈拍・症状確認" },
+      { time: "120分",      action: "血圧・脈拍確認" },
+      { time: "240分（終了）", action: "採血（PAC・PRA・血清K・コルチゾール）", isKey: true },
+    ],
+    judgments: [
+      {
+        parameter: "負荷後 PAC（4時間後）",
+        unit: "ng/dL", threshold: "10", isNormalAbove: false,
+        normalLabel: "PAは否定的（<5ng/dL で確実）",
+        abnormalLabel: "PA確定（≥10ng/dL）",
+        note: "5〜10ng/dLはグレーゾーン。5未満でPA否定、10以上でPA確定（Endocrine Society ガイドライン）",
+      },
+    ],
+    normalInterpretation: "循環血漿量増加 → レニン↓ → AngII↓ → アルドステロン<5ng/dLに抑制。PA否定。",
+    abnormalInterpretation: "アルドステロンが≥10ng/dLで抑制されない → PA確定。副腎CT → AVS（副腎静脈サンプリング）で一側性か両側性かを鑑別し、手術 or 薬物療法を選択。",
+    cautions: [
+      "心不全・重篤な高血圧・腎不全・低K血症未補正では禁忌",
+      "点滴中の血圧上昇（稀にPAで著明高血圧）に注意",
+      "試験中は臥位保持 → 体位変換で結果が変動する",
+      "4時間の拘束が必要 → 患者への十分な説明と同意が必要",
+    ],
+    contraindications: [
+      "心不全（EF低下・浮腫あり）",
+      "コントロール不良な高血圧（≥160/100mmHg）",
+      "重篤な腎機能障害",
+      "低K血症未補正（<3.0mEq/L）",
+    ],
+    stopCriteria: ["収縮期血圧>200mmHg持続", "著明な呼吸困難・肺水腫症状"],
+    pitfalls: [
+      "5〜10ng/dLのグレーゾーンでは安易に確定しない → 臨床所見・ARR・カプトプリル試験と総合判断",
+      "AVSは技術的に難しい → 一側性疑いでも経験施設への紹介が必要",
+      "体位（臥位 vs 座位）で結果が変わる → 試験プロトコルを厳守する",
+    ],
+    reportPhrase: "生理食塩水負荷試験で4時間後PAC ___ng/dLと【抑制あり（PA否定）／抑制不十分（PA確定）】でした。",
+    hormoneFlow: {
+      axisKey: "RAAS", highlightTarget: "adrenal_zona",
+      mechanismLabel: "生食2Lで循環血漿量増加 →\n正常ならアルドステロン抑制・PAでは抑制されない",
     },
   },
 
@@ -751,6 +1058,138 @@ export const endocrineTests: EndocrineTest[] = [
     hormoneFlow: {
       axisKey: "Pancreas", highlightTarget: "beta_cell",
       mechanismLabel: "グルカゴンで膵β細胞を刺激して\nCペプチド（残存機能）を評価",
+    },
+  },
+
+  {
+    id: "fasting-test-insulinoma",
+    name: "絶食試験（インスリノーマ診断）",
+    tagline: "低血糖時の不適切インスリン分泌を証明するWhippleの三徴確認",
+    essence: "低血糖時の自律インスリン過剰分泌",
+    color: "amber",
+    category: "膵臓・血糖",
+    status: "available",
+    what: "絶食によって低血糖を誘発し、低血糖時にもインスリン分泌が抑制されないことを証明する。インスリノーマの確定診断に用いる。Whippleの三徴（①低血糖症状 ②血糖<55mg/dL ③ブドウ糖投与で症状消失）の確認が目標。最長72時間の入院管理が必要。",
+    indications: [
+      "インスリノーマ疑い（空腹時低血糖・不可解な意識障害・神経グリコペニア症状）",
+      "低血糖の原因精査（内因性 vs 外因性インスリン鑑別）",
+      "MEN1患者の膵腫瘍スクリーニング",
+    ],
+    preparations: [
+      "入院管理下で実施（72時間まで）",
+      "絶食中は水のみ許可（無カロリー・無カフェイン）",
+      "静脈ルート確保・50%ブドウ糖液・グルカゴン1mgを常備",
+      "血糖<60mg/dLとなったら採血セット（血糖・インスリン・Cペプチド・プロインスリン・βヒドロキシ酪酸・血中薬物）を実施",
+    ],
+    timeline: [
+      { time: "絶食開始", action: "血糖・インスリン・Cペプチド・プロインスリン採血", isKey: true },
+      { time: "6時間毎", action: "血糖モニタリング（血糖<60mg/dLで追加採血）", isKey: true },
+      { time: "血糖<55mg/dL 時", action: "終了採血（血糖・インスリン・Cペプチド・プロインスリン・βOHB・薬物スクリーニング）", isKey: true, note: "症状確認→Whippleの三徴を記録" },
+      { time: "終了後", action: "50%ブドウ糖 20〜50mL IV → 症状消失を確認", isKey: true },
+      { time: "72時間経過", action: "低血糖なく72時間経過 → インスリノーマの可能性低い", note: "ただし陰性でも除外不可" },
+    ],
+    judgments: [
+      {
+        parameter: "低血糖時インスリン（血糖<55mg/dL時）",
+        unit: "μIU/mL", threshold: "3", isNormalAbove: false,
+        normalLabel: "インスリン適切に抑制",
+        abnormalLabel: "不適切インスリン分泌 → インスリノーマ疑い",
+        note: "インスリン≥3 + Cペプチド≥0.6nmol/L + プロインスリン≥5pmol/L が揃えば確定的",
+      },
+    ],
+    normalInterpretation: "低血糖時にインスリンが正常に抑制 → インスリノーマは否定的。他の低血糖原因（インスリン分泌促進薬・非膵島性腫瘍性低血糖）を検討。",
+    abnormalInterpretation: "低血糖にもかかわらずインスリン・Cペプチド・プロインスリンが高値 → インスリノーマ確定。EUS（超音波内視鏡）・CT・MRIで局在診断。外科切除が根治治療。",
+    cautions: [
+      "重篤な低血糖（痙攣・意識消失）には直ちにブドウ糖投与 → 試験継続はしない",
+      "採血タイミングが遅れると診断精度が低下 → 事前プロトコルの周知徹底",
+      "スルホニル尿素薬・メグリチニドの内服はインスリン分泌を増加させるため中止確認が必須",
+      "インスリン自己注射や経口血糖降下薬使用者では偽陽性あり → 薬物スクリーニング必須",
+    ],
+    contraindications: [
+      "重篤な心疾患・不整脈（低血糖で悪化リスク）",
+      "副腎不全未治療（低血糖への反応障害）",
+    ],
+    stopCriteria: [
+      "血糖<45mg/dL かつ重篤な神経症状（痙攣・意識消失）",
+      "血糖<40mg/dL（採血完了後に直ちに終了）",
+    ],
+    pitfalls: [
+      "Cペプチドが低値（<0.6nmol/L）でインスリン高値 → 外因性インスリン注射を疑う（自己注射・虚偽申告）",
+      "βヒドロキシ酪酸が高値（>2.7mmol/L）ならインスリン分泌は適切に抑制されている証拠",
+      "プロインスリン比率（プロインスリン/インスリン）が高い → インスリノーマの特徴",
+      "転移性・悪性インスリノーマもあるため確定後は画像評価が必須",
+    ],
+    reportPhrase: "絶食試験で血糖 ___mg/dLの低血糖時にインスリン ___μIU/mL・Cペプチド ___nmol/Lと【インスリン適切抑制／不適切高値（インスリノーマ疑い）】でした。",
+    hormoneFlow: {
+      axisKey: "Pancreas", highlightTarget: "beta_cell",
+      mechanismLabel: "絶食で低血糖を誘発 →\n正常ならインスリン抑制・腫瘍では抑制されない",
+    },
+  },
+
+  {
+    id: "glucagon-insulinoma",
+    name: "グルカゴン負荷試験（インスリノーマ鑑別）",
+    tagline: "グルカゴン刺激後の反応性低血糖でインスリノーマを検証する",
+    essence: "グルカゴン刺激に対する異常インスリン分泌",
+    color: "orange",
+    category: "膵臓・血糖",
+    status: "available",
+    what: "グルカゴン静注後に血糖・インスリン・Cペプチドを時系列で測定する。インスリノーマでは腫瘍がグルカゴン刺激に反応して過剰にインスリンを分泌し、初期の血糖上昇の後に著明な反応性低血糖が起こる。絶食試験の補完的検査として使用される。注意：このグルカゴン試験はDM患者のβ細胞機能評価（グルカゴン-Cpeptide試験）とは目的・プロトコルが異なる。",
+    indications: [
+      "絶食試験の補完（72時間絶食で低血糖が誘発されなかった場合）",
+      "インスリノーマ診断の追加証拠収集",
+      "空腹時低血糖の機能的確認",
+    ],
+    preparations: [
+      "絶食（12時間以上）",
+      "静脈ルート2本確保（採血用・ブドウ糖投与用）",
+      "50%ブドウ糖液・グルカゴンキット（救急用）を手元に準備",
+      "試験前血糖が<70mg/dLなら中止を検討（すでに危険域）",
+    ],
+    timeline: [
+      { time: "0分",  action: "採血（血糖・インスリン・Cペプチド）", isKey: true },
+      { time: "0分",  action: "グルカゴン 1mg IVボーラス（急速静注）", isKey: true },
+      { time: "5分",  action: "採血（血糖・インスリン・Cペプチド）", isKey: true },
+      { time: "10分", action: "採血（血糖・インスリン・Cペプチド）", isKey: true },
+      { time: "15分", action: "採血（血糖）", isKey: true },
+      { time: "20分", action: "採血（血糖）" },
+      { time: "30分", action: "採血（血糖）" },
+      { time: "45分", action: "採血（血糖）", note: "血糖<55mg/dLなら試験終了・ブドウ糖投与" },
+    ],
+    judgments: [
+      {
+        parameter: "5〜10分のインスリン頂値",
+        unit: "μIU/mL", threshold: "150",  isNormalAbove: false,
+        normalLabel: "正常反応",
+        abnormalLabel: "著明なインスリン過剰分泌 → インスリノーマ疑い",
+        note: "絶対値より「低血糖誘発の有無」と「インスリン抑制なし」が重要。カットオフは施設により異なる",
+      },
+    ],
+    normalInterpretation: "グルカゴン刺激後に血糖が上昇・インスリンは適度に反応し、30〜45分で正常血糖に戻る → 自律的インスリン分泌過剰の証拠なし。",
+    abnormalInterpretation: "グルカゴン刺激後5〜10分でインスリンが著明高値 → 15〜30分以内に血糖が55mg/dL未満に低下（反応性低血糖）→ インスリノーマを強く示唆。絶食試験との組み合わせで診断精度が高まる。",
+    cautions: [
+      "著明な反応性低血糖（血糖<45mg/dL）が起こりうる → 常にブドウ糖投与の準備",
+      "試験終了まで患者から離れない（医師または看護師が付き添う）",
+      "嘔気・嘔吐（グルカゴン副作用）に対する準備",
+      "グルカゴン禁忌: インスリノーマが疑われる以外の高インスリン血症状態ではリスクが高い",
+    ],
+    contraindications: [
+      "褐色細胞腫疑い（カテコラミン放出誘発）",
+      "重篤な心疾患",
+    ],
+    stopCriteria: [
+      "血糖<45mg/dL → 試験中止・50%ブドウ糖投与",
+      "痙攣・意識消失",
+    ],
+    pitfalls: [
+      "グルカゴン-Cpeptide試験（DM用：2・6分採血）と混同しない → 採血時点と目的が異なる",
+      "インスリン高値のみでなく「低血糖誘発の有無」を必ず確認する",
+      "偽陰性あり（腫瘍が小さいまたは間欠性分泌） → 陰性でもインスリノーマを除外できない",
+    ],
+    reportPhrase: "グルカゴン負荷試験で5〜10分インスリン頂値 ___μIU/mL・血糖最低値 ___mg/dLと【正常反応／著明過剰分泌・反応性低血糖あり（インスリノーマ疑い）】でした。",
+    hormoneFlow: {
+      axisKey: "Pancreas", highlightTarget: "beta_cell",
+      mechanismLabel: "グルカゴンでβ細胞を刺激 →\nインスリノーマは過剰分泌後に反応性低血糖",
     },
   },
 ];
