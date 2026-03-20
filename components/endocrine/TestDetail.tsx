@@ -58,16 +58,12 @@ export default function TestDetail({ test }: { test: EndocrineTest }) {
         <Link href="/endocrine" className="flex items-center gap-1 text-white/70 text-sm mb-3">
           ‹ 一覧
         </Link>
-        <div className="flex items-start justify-between gap-3">
-          <div>
-            <h1 className="text-xl font-bold text-white leading-tight">{test.name}</h1>
-            <p className="text-white/75 text-sm mt-0.5">{test.tagline}</p>
-          </div>
-          {/* essence バッジ */}
-          <div className="flex-shrink-0 bg-white/20 rounded-xl px-3 py-1.5 text-center">
-            <p className="text-white/70 text-xs">みているもの</p>
-            <p className="text-white text-xs font-bold">{test.essence}</p>
-          </div>
+        <h1 className="text-xl font-bold text-white leading-tight">{test.name}</h1>
+        <p className="text-white/75 text-sm mt-0.5">{test.tagline}</p>
+        {/* essence バッジ */}
+        <div className="inline-flex items-center gap-1.5 bg-white/20 rounded-lg px-2.5 py-1 mt-2">
+          <span className="text-white/70 text-xs">みているもの:</span>
+          <span className="text-white text-xs font-bold">{test.essence}</span>
         </div>
       </div>
 
