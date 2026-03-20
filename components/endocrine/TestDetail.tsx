@@ -12,6 +12,7 @@ const C: Record<string, { header: string; tag: string; tagText: string }> = {
   teal:    { header: "bg-teal-600",    tag: "bg-teal-100",    tagText: "text-teal-800" },
   red:     { header: "bg-red-600",     tag: "bg-red-100",     tagText: "text-red-800" },
   emerald: { header: "bg-emerald-600", tag: "bg-emerald-100", tagText: "text-emerald-800" },
+  indigo:  { header: "bg-indigo-600",  tag: "bg-indigo-100",  tagText: "text-indigo-800" },
 };
 
 // ─── セクション定義 ───────────────────────────────────

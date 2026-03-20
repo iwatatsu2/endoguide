@@ -14,6 +14,7 @@ export const COLOR_MAP: Record<string, {
   sky:     { accent: "text-sky-400",     border: "border-sky-500/30 hover:border-sky-400",     badge: "bg-sky-500/10 border-sky-500/20",     badgeText: "text-sky-400" },
   orange:  { accent: "text-orange-400",  border: "border-orange-500/30 hover:border-orange-400",  badge: "bg-orange-500/10 border-orange-500/20",  badgeText: "text-orange-400" },
   lime:    { accent: "text-lime-400",    border: "border-lime-500/30 hover:border-lime-400",    badge: "bg-lime-500/10 border-lime-500/20",    badgeText: "text-lime-400" },
+  indigo:  { accent: "text-indigo-400",  border: "border-indigo-500/30 hover:border-indigo-400",  badge: "bg-indigo-500/10 border-indigo-500/20",  badgeText: "text-indigo-400" },
 };
 
 interface TestCardProps {

@@ -456,6 +456,71 @@ export const endocrineTests: EndocrineTest[] = [
     },
   },
 
+  {
+    id: "ghrp2-test",
+    name: "GHRP-2負荷試験",
+    tagline: "低血糖リスクなしで下垂体GH分泌能を評価する",
+    essence: "下垂体GH分泌能（グレリン受容体経由）",
+    color: "indigo",
+    category: "成長ホルモン軸",
+    status: "available",
+    what: "GHRP-2（Growth Hormone Releasing Peptide-2）は下垂体のグレリン受容体（GHS-R）に作用し、GHRHとは独立した経路でGH分泌を促進する合成ペプチドである。インスリン低血糖試験が禁忌の患者でも安全に実施でき、日本では成人GH分泌不全診断の保険適用試験として承認されている。",
+    indications: [
+      "成人GH分泌不全の診断（インスリン低血糖試験の禁忌・代替として）",
+      "小児GH分泌不全の確認試験",
+      "下垂体術後・放射線治療後のGH軸評価",
+    ],
+    preparations: [
+      "絶食（8時間以上）",
+      "GH基礎値・IGF-1・血糖の確認",
+      "GHRP-2 2μg/kgを生理食塩水2mLに溶解（最大100μg）",
+    ],
+    timeline: [
+      { time: "0分",  action: "採血（GH・血糖・IGF-1）", isKey: true },
+      { time: "0分",  action: "GHRP-2 2μg/kg IVボーラス（最大100μg）", isKey: true, note: "30秒以内に急速静注" },
+      { time: "15分", action: "採血（GH）", isKey: true },
+      { time: "30分", action: "採血（GH）", isKey: true },
+      { time: "45分", action: "採血（GH）" },
+      { time: "60分", action: "採血（GH）" },
+      { time: "90分", action: "採血（GH）" },
+    ],
+    judgments: [
+      {
+        parameter: "GH頂値（15〜60分のいずれか）",
+        unit: "ng/mL", threshold: "3", isNormalAbove: true,
+        normalLabel: "GH分泌能 正常",
+        abnormalLabel: "GH分泌不全（要精査）",
+        note: "BMI高値（>25）では頂値が低下しやすい。肥満例ではカットオフを下げて評価する施設もある。",
+      },
+    ],
+    normalInterpretation: "GHRP-2刺激でGHが3ng/mL以上に上昇 → 下垂体のGH分泌能は保たれている。",
+    abnormalInterpretation: "GH頂値<3ng/mL → 成人GH分泌不全の可能性。他の負荷試験（アルギニン・インスリン）との組み合わせで診断を確定する。",
+    cautions: [
+      "低血糖は起こらない（インスリン低血糖試験との大きな相違点）",
+      "一過性の顔面紅潮・口渇・眠気が起こることがある",
+      "肥満ではGH頂値が低下しやすい → BMIを記録して解釈に反映させる",
+      "下垂体に病変がある場合はGH分泌が著しく低下する",
+    ],
+    contraindications: [
+      "妊娠中（安全性未確立）",
+      "活動性悪性腫瘍（GH分泌促進により増悪リスク）",
+    ],
+    stopCriteria: [
+      "著明な血圧変動・アレルギー反応（まれ）",
+    ],
+    pitfalls: [
+      "GHRP-2はGHRHとは独立した経路で作用するため、GHRH単独投与と反応が異なる",
+      "頂値は15〜30分に出やすい → 30分までの採血を確実に行う",
+      "BMI補正を忘れると過剰診断（肥満例でGH分泌不全と誤診）になりやすい",
+      "IGF-1が正常範囲内ならGH分泌不全の可能性は低い → 試験前に必ず確認",
+    ],
+    reportPhrase: "GHRP-2負荷試験でGH頂値が ___ng/mL と【正常反応／反応不良】でした。BMI ___。",
+    hormoneFlow: {
+      axisKey: "GH", highlightTarget: "pituitary",
+      mechanismLabel: "GHRP-2がグレリン受容体に作用し\n下垂体からGH分泌を促進",
+    },
+  },
+
   // ════════════════════════════════
   // 性腺軸
   // ════════════════════════════════
