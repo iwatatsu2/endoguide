@@ -986,7 +986,7 @@ export const endocrineTests: EndocrineTest[] = [
     color: "amber",
     category: "膵臓・血糖",
     status: "available",
-    what: "絶食によって低血糖を誘発し、低血糖時にもインスリン分泌が抑制されないことを証明する。インスリノーマの確定診断に用いる。Whippleの三徴（①低血糖症状 ②血糖<55mg/dL ③ブドウ糖投与で症状消失）の確認が目標。最長72時間の入院管理が必要。",
+    what: "絶食によって低血糖を誘発し、低血糖時にもインスリン分泌が抑制されないことを証明する。インスリノーマの確定診断に用いる。Whippleの三徴（①低血糖症状 ②血糖<55mg/dL ③ブドウ糖投与で症状消失）の確認が目標。最長72時間の入院管理が必要。試験終了時にはグルカゴン負荷試験（1mg IV）をセットで施行し、インスリン・Cペプチドの過剰反応を確認する。",
     indications: [
       "インスリノーマ疑い（空腹時低血糖・不可解な意識障害・神経グリコペニア症状）",
       "低血糖の原因精査（内因性 vs 外因性インスリン鑑別）",
@@ -1002,8 +1002,11 @@ export const endocrineTests: EndocrineTest[] = [
       { time: "絶食開始", action: "血糖・インスリン・Cペプチド・プロインスリン採血", isKey: true },
       { time: "6時間毎", action: "血糖モニタリング（血糖<60mg/dLで追加採血）", isKey: true },
       { time: "血糖<55mg/dL 時", action: "終了採血（血糖・インスリン・Cペプチド・プロインスリン・βOHB・薬物スクリーニング）", isKey: true, note: "症状確認→Whippleの三徴を記録" },
-      { time: "終了後", action: "50%ブドウ糖 20〜50mL IV → 症状消失を確認", isKey: true },
-      { time: "72時間経過", action: "低血糖なく72時間経過 → インスリノーマの可能性低い", note: "ただし陰性でも除外不可" },
+      { time: "終了採血直後", action: "グルカゴン 1mg IVボーラス投与", isKey: true, note: "絶食試験とセットで必ず施行する" },
+      { time: "グルカゴン後 10分", action: "採血（血糖・インスリン・Cペプチド）", isKey: true, note: "血糖≥25mg/dL上昇 → インスリノーマの追加証拠" },
+      { time: "グルカゴン後 20分", action: "採血（血糖）確認・症状観察", isKey: false },
+      { time: "終了", action: "50%ブドウ糖 20〜50mL IV → 症状消失を確認", isKey: true },
+      { time: "72時間経過（無低血糖）", action: "低血糖なく72時間経過 → グルカゴン負荷試験を施行して終了", note: "陰性でもインスリノーマは除外できない" },
     ],
     judgments: [
       {
@@ -1036,7 +1039,7 @@ export const endocrineTests: EndocrineTest[] = [
       "プロインスリン比率（プロインスリン/インスリン）が高い → インスリノーマの特徴",
       "転移性・悪性インスリノーマもあるため確定後は画像評価が必須",
     ],
-    reportPhrase: "絶食試験で血糖 ___mg/dLの低血糖時にインスリン ___μIU/mL・Cペプチド ___nmol/Lと【インスリン適切抑制／不適切高値（インスリノーマ疑い）】でした。",
+    reportPhrase: "絶食試験で血糖 ___mg/dLの低血糖時にインスリン ___μIU/mL・Cペプチド ___nmol/Lと【インスリン適切抑制／不適切高値（インスリノーマ疑い）】でした。グルカゴン負荷後10分血糖 ___mg/dL（___mg/dL上昇）でした。",
     hormoneFlow: {
       axisKey: "Pancreas", highlightTarget: "beta_cell",
       mechanismLabel: "絶食で低血糖を誘発 →\n正常ならインスリン抑制・腫瘍では抑制されない",
