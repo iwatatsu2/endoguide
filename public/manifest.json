@@ -1,6 +1,6 @@
 {
-  "name": "EndoCompass",
-  "short_name": "EndoCompass",
+  "name": "Endo Compass",
+  "short_name": "Endo Compass",
   "description": "Endocrine loading test quick reference for residents",
   "start_url": "/endocrine",
   "display": "standalone",

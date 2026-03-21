@@ -13,13 +13,13 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "EndoCompass",
+  title: "Endo Compass",
   description: "Endocrine loading test quick reference for residents",
   manifest: "/manifest.json",
   appleWebApp: {
     capable: true,
     statusBarStyle: "black-translucent",
-    title: "EndoCompass",
+    title: "Endo Compass",
   },
 };
 

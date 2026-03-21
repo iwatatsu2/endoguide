@@ -2,7 +2,7 @@ import { endocrineTests, TestCategory } from "@/data/endocrineTests";
 import TestCard from "@/components/endocrine/TestCard";
 
 export const metadata = {
-  title: "EndoCompass – Endocrine Stimulation Tests",
+  title: "Endo Compass – Endocrine Stimulation Tests",
   description: "Quick reference for residents. Endocrine loading tests at a glance.",
 };
 
@@ -51,7 +51,7 @@ export default function EndocrinePage() {
                 Endocrine · Loading Tests
               </p>
               <h1 className="text-3xl font-black text-white tracking-tight">
-                Endo<span className="text-blue-400">Compass</span>
+                Endo<span className="text-blue-400"> Compass</span>
               </h1>
             </div>
             <span className="bg-blue-500/10 border border-blue-500/30 text-blue-400 text-xs font-semibold px-2.5 py-1 rounded-full">
