@@ -96,6 +96,68 @@ export default function EndocrinePage() {
           Reference values may vary by institution.<br />
           Always follow your facility&apos;s protocol.
         </p>
+
+        {/* ── 制作者 ── */}
+        <div className="mt-8 rounded-2xl border border-gray-800 bg-gray-900 p-5 space-y-4">
+          <div className="text-center">
+            <p className="text-base font-black text-white">Dr.いわたつ</p>
+            <p className="text-xs text-gray-400 mt-0.5">糖尿病・内分泌専門医</p>
+          </div>
+
+          <div className="space-y-3">
+            {/* 公式HP */}
+            <a
+              href="https://driwatatsu.readdy.co/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-3 rounded-xl bg-gray-800 px-4 py-3 hover:bg-gray-700 transition-colors"
+            >
+              <span className="text-lg">🌐</span>
+              <div>
+                <p className="text-xs font-semibold text-gray-300">公式サイト</p>
+                <p className="text-xs text-gray-500">アプリ・研究・講演情報はこちら</p>
+              </div>
+            </a>
+
+            {/* Instagram */}
+            <a
+              href="https://www.instagram.com/dr.iwatatsu/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-3 rounded-xl bg-gray-800 px-4 py-3 hover:bg-gray-700 transition-colors"
+            >
+              <span className="text-lg">📸</span>
+              <div>
+                <p className="text-xs font-semibold text-gray-300">Instagram</p>
+                <p className="text-xs text-gray-500">@dr.iwatatsu</p>
+              </div>
+            </a>
+
+            {/* 勉強会・研修依頼 */}
+            <a
+              href="https://driwatatsu.readdy.co/corporate#contact-form"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-3 rounded-xl bg-blue-500/10 border border-blue-500/30 px-4 py-3 hover:bg-blue-500/20 transition-colors"
+            >
+              <span className="text-lg">📚</span>
+              <div>
+                <p className="text-xs font-semibold text-blue-300">勉強会・研修のご依頼</p>
+                <p className="text-xs text-gray-500">このツールを用いた講義・研修はこちら</p>
+              </div>
+            </a>
+          </div>
+
+          {/* 免責事項 */}
+          <div className="rounded-xl bg-yellow-950/30 border border-yellow-800/40 px-4 py-3">
+            <p className="text-xs font-bold text-yellow-500 mb-1">【免責事項】</p>
+            <p className="text-xs text-gray-500 leading-relaxed">
+              本アプリは医療従事者向けの教育・参考目的で作成されています。掲載内容は作成時点の情報に基づいており、最新のガイドラインと異なる場合があります。最終的な判断は担当医の責任のもとで行ってください。
+            </p>
+          </div>
+
+          <p className="text-center text-xs text-gray-700">Endo Compass · 2026</p>
+        </div>
       </div>
     </div>
   );
