@@ -28,8 +28,8 @@ export default function Icon() {
             justifyContent: "center",
           }}
         >
-          <span style={{ color: "white", fontSize: "10px", fontWeight: "900", fontFamily: "sans-serif" }}>
-            EC
+          <span style={{ color: "white", fontSize: "8px", fontWeight: "900", fontFamily: "sans-serif" }}>
+            Endo
           </span>
         </div>
       </div>

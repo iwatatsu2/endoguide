@@ -31,13 +31,13 @@ export default function AppleIcon() {
           <span
             style={{
               color: "white",
-              fontSize: "52px",
+              fontSize: "44px",
               fontWeight: "900",
-              letterSpacing: "-2px",
+              letterSpacing: "-1px",
               fontFamily: "sans-serif",
             }}
           >
-            EC
+            Endo
           </span>
         </div>
       </div>
