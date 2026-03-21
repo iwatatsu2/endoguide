@@ -103,7 +103,7 @@ export default function EndocrinePage() {
             <img
               src="/creator.jpg"
               alt="Dr.いわたつ"
-              className="w-32 h-32 rounded-2xl object-cover shadow-lg"
+              className="w-36 rounded-2xl object-contain shadow-lg"
             />
             <div className="text-center">
               <p className="text-base font-black text-white">Dr.いわたつ</p>
