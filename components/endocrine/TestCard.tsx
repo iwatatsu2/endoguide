@@ -36,8 +36,8 @@ export default function TestCard({ test, index }: TestCardProps) {
         {String(index + 1).padStart(2, "0")}
       </div>
       <div className="flex-1 min-w-0">
-        <p className="text-sm font-bold text-white leading-snug">{test.name}</p>
-        <p className="text-xs text-gray-500 mt-0.5 truncate">{test.tagline}</p>
+        <p className="text-sm font-black text-white leading-snug">{test.name}</p>
+        <p className="text-xs text-gray-400 font-semibold mt-0.5 truncate">{test.tagline}</p>
         {!isAvailable && (
           <span className="inline-block mt-1 text-xs px-2 py-0.5 rounded-full bg-gray-800 text-gray-500 border border-gray-700">
             Coming soon

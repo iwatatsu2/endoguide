@@ -80,7 +80,7 @@ export default function EndocrinePage() {
                     <span className="text-base">{meta.icon}</span>
                     <div>
                       <p className="text-xs font-black text-white tracking-wide">{category}</p>
-                      <p className="text-xs text-gray-600">{meta.axis}</p>
+                      <p className="text-xs font-bold text-gray-500">{meta.axis}</p>
                     </div>
                   </div>
                   <div className="space-y-2.5">
