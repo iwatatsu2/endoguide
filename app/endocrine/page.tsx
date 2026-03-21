@@ -99,9 +99,16 @@ export default function EndocrinePage() {
 
         {/* ── 制作者 ── */}
         <div className="mt-8 rounded-2xl border border-gray-800 bg-gray-900 p-5 space-y-4">
-          <div className="text-center">
-            <p className="text-base font-black text-white">Dr.いわたつ</p>
-            <p className="text-xs text-gray-400 mt-0.5">糖尿病・内分泌専門医</p>
+          <div className="flex flex-col items-center gap-2">
+            <img
+              src="/creator.jpg"
+              alt="Dr.いわたつ"
+              className="w-32 h-32 rounded-2xl object-cover shadow-lg"
+            />
+            <div className="text-center">
+              <p className="text-base font-black text-white">Dr.いわたつ</p>
+              <p className="text-xs text-gray-400 mt-0.5">糖尿病・内分泌専門医</p>
+            </div>
           </div>
 
           <div className="space-y-3">
