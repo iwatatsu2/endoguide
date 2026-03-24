@@ -1,6 +1,7 @@
 import { endocrineTests, TestCategory } from "@/data/endocrineTests";
 import TestCard from "@/components/endocrine/TestCard";
 import PageTabs from "@/components/endocrine/PageTabs";
+import QRShareButton from "@/components/endocrine/QRShareButton";
 
 export const metadata = {
   title: "Endo Compass – Endocrine Stimulation Tests",
@@ -55,9 +56,12 @@ export default function EndocrinePage() {
                 Endo<span className="text-blue-400"> Compass</span>
               </h1>
             </div>
-            <span className="bg-blue-500/10 border border-blue-500/30 text-blue-400 text-xs font-semibold px-2.5 py-1 rounded-full">
-              for Residents
-            </span>
+            <div className="flex items-center gap-2">
+              <QRShareButton />
+              <span className="bg-blue-500/10 border border-blue-500/30 text-blue-400 text-xs font-semibold px-2.5 py-1 rounded-full">
+                for Residents
+              </span>
+            </div>
           </div>
           <p className="text-gray-500 text-xs mt-2">
             {endocrineTests.filter(t => t.status === "available").length} tests available · Tap to review
