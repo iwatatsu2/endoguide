@@ -1,5 +1,5 @@
 import { endocrineTests, TestCategory } from "@/data/endocrineTests";
-import TestCard from "@/components/endocrine/TestCard";
+import CategoryAccordion from "@/components/endocrine/CategoryAccordion";
 import PageTabs from "@/components/endocrine/PageTabs";
 import QRShareButton from "@/components/endocrine/QRShareButton";
 
@@ -72,28 +72,23 @@ export default function EndocrinePage() {
       {/* ── タブ切替（負荷試験 / 基礎知識・鑑別） ── */}
       <div className="max-w-lg mx-auto pt-4">
         <PageTabs testList={
-          <div className="space-y-6">
+          <div className="space-y-2">
             {CATEGORY_ORDER.map((category) => {
               const tests = grouped[category];
               if (!tests || tests.length === 0) return null;
               const meta = CATEGORY_META[category];
+              const startIndex = globalIndex;
+              globalIndex += tests.length;
 
               return (
-                <div key={category}>
-                  <div className="flex items-center gap-2 mb-3 px-1">
-                    <span className="text-base">{meta.icon}</span>
-                    <div>
-                      <p className="text-xs font-black text-white tracking-wide">{category}</p>
-                      <p className="text-xs font-bold text-gray-500">{meta.axis}</p>
-                    </div>
-                  </div>
-                  <div className="space-y-2.5">
-                    {tests.map((test) => {
-                      const idx = globalIndex++;
-                      return <TestCard key={test.id} test={test} index={idx} />;
-                    })}
-                  </div>
-                </div>
+                <CategoryAccordion
+                  key={category}
+                  category={category}
+                  icon={meta.icon}
+                  axis={meta.axis}
+                  tests={tests}
+                  startIndex={startIndex}
+                />
               );
             })}
 
