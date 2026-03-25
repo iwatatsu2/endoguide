@@ -3,10 +3,17 @@ import { useState } from "react";
 
 const DM_URL = "https://iwatatsu2.github.io/dm-compass/";
 const ENDO_URL = "https://endoguide.vercel.app/endocrine";
+const ELEC_URL = "https://iwatatsu2.github.io/electrolyte-compass/";
 
 function qrSrc(url: string) {
   return `https://api.qrserver.com/v1/create-qr-code/?size=180x180&color=ffffff&bgcolor=030712&data=${encodeURIComponent(url)}`;
 }
+
+const APPS = [
+  { url: DM_URL,   label: "DM Compass",          sub: "糖尿病病棟OS",     color: "text-green-400" },
+  { url: ENDO_URL, label: "Endo Compass",         sub: "内分泌負荷試験",   color: "text-blue-400" },
+  { url: ELEC_URL, label: "Electrolyte Compass",  sub: "電解質異常鑑別",   color: "text-cyan-400" },
+];
 
 export default function QRShareButton() {
   const [open, setOpen] = useState(false);
@@ -25,51 +32,26 @@ export default function QRShareButton() {
       </button>
 
       {open && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm"
-          onClick={() => setOpen(false)}
-        >
-          <div
-            className="bg-gray-900 border border-gray-700 rounded-2xl p-6 mx-4 w-full max-w-sm"
-            onClick={(e) => e.stopPropagation()}
-          >
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm" onClick={() => setOpen(false)}>
+          <div className="bg-gray-900 border border-gray-700 rounded-2xl p-6 mx-4 w-full max-w-sm" onClick={(e) => e.stopPropagation()}>
             <div className="flex items-center justify-between mb-4">
               <p className="text-sm font-bold text-white">アプリを共有する</p>
               <button onClick={() => setOpen(false)} className="text-gray-500 hover:text-white">
                 <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
               </button>
             </div>
-            <div className="grid grid-cols-2 gap-4">
-              <div className="flex flex-col items-center gap-2">
-                <img src={qrSrc(DM_URL)} alt="DM Compass QR" className="w-40 h-40 rounded-xl" />
-                <div className="text-center">
-                  <p className="text-sm font-bold text-green-400">DM Compass</p>
-                  <p className="text-xs text-gray-500">糖尿病病棟OS</p>
-                  <a
-                    href={DM_URL}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="block mt-1 text-xs text-blue-400 underline break-all hover:text-blue-300"
-                  >
-                    {DM_URL}
-                  </a>
+            <div className="grid grid-cols-3 gap-3">
+              {APPS.map((app) => (
+                <div key={app.url} className="flex flex-col items-center gap-2">
+                  <img src={qrSrc(app.url)} alt={app.label} className="w-full aspect-square rounded-xl" />
+                  <div className="text-center">
+                    <p className={`text-xs font-bold ${app.color}`}>{app.label}</p>
+                    <p className="text-xs text-gray-500">{app.sub}</p>
+                    <a href={app.url} target="_blank" rel="noopener noreferrer"
+                      className="block mt-1 text-xs text-blue-400 underline hover:text-blue-300">開く</a>
+                  </div>
                 </div>
-              </div>
-              <div className="flex flex-col items-center gap-2">
-                <img src={qrSrc(ENDO_URL)} alt="Endo Compass QR" className="w-40 h-40 rounded-xl" />
-                <div className="text-center">
-                  <p className="text-sm font-bold text-blue-400">Endo Compass</p>
-                  <p className="text-xs text-gray-500">内分泌負荷試験</p>
-                  <a
-                    href={ENDO_URL}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="block mt-1 text-xs text-blue-400 underline break-all hover:text-blue-300"
-                  >
-                    {ENDO_URL}
-                  </a>
-                </div>
-              </div>
+              ))}
             </div>
             <p className="text-xs text-gray-600 text-center mt-4">QRコードをスキャンしてアクセス</p>
           </div>
