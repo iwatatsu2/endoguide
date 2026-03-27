@@ -10,9 +10,9 @@ function qrSrc(url: string) {
 }
 
 const APPS = [
-  { url: DM_URL,   label: "DM Compass",          sub: "糖尿病病棟OS",     color: "text-green-400" },
-  { url: ENDO_URL, label: "Endo Compass",         sub: "内分泌負荷試験",   color: "text-blue-400" },
-  { url: ELEC_URL, label: "Electrolyte Compass",  sub: "電解質異常鑑別",   color: "text-cyan-400" },
+  { url: DM_URL,   label: "DM Compass",          sub: "糖尿病病棟OS",     color: "text-green-400", hex: "" },
+  { url: ENDO_URL, label: "Endo Compass",         sub: "内分泌負荷試験",   color: "text-blue-400",  hex: "" },
+  { url: ELEC_URL, label: "Electrolyte Compass",  sub: "電解質異常鑑別",   color: "",               hex: "#f97316" },
 ];
 
 export default function QRShareButton() {
@@ -45,7 +45,7 @@ export default function QRShareButton() {
                 <div key={app.url} className="flex flex-col items-center gap-2">
                   <img src={qrSrc(app.url)} alt={app.label} className="w-full aspect-square rounded-xl" />
                   <div className="text-center">
-                    <p className={`text-xs font-bold ${app.color}`}>{app.label}</p>
+                    <p className={`text-xs font-bold ${app.color}`} style={app.hex ? { color: app.hex } : {}}>{app.label}</p>
                     <p className="text-xs text-gray-500">{app.sub}</p>
                     <a href={app.url} target="_blank" rel="noopener noreferrer"
                       className="block mt-1 text-xs text-blue-400 underline hover:text-blue-300">開く</a>
