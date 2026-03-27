@@ -101,9 +101,9 @@ export default function EndocrinePage() {
             <div className="mt-8 rounded-2xl border border-gray-800 bg-gray-900 p-5 space-y-4">
               <div className="flex flex-col items-center gap-2">
                 <img
-                  src="/creator.jpg"
+                  src="/dr-iwatatsu.png"
                   alt="Dr.いわたつ"
-                  className="w-36 rounded-2xl object-contain shadow-lg"
+                  className="w-36 object-contain"
                 />
                 <div className="text-center">
                   <p className="text-base font-black text-white">Dr.いわたつ</p>
