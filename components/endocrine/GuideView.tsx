@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 
-type GuideTab = "ホルモン軸" | "副腎腫瘤" | "クッシング" | "PA" | "遺伝性MEN";
+type GuideTab = "ホルモン軸" | "副腎腫瘤" | "クッシング" | "PA" | "褐色細胞腫" | "遺伝性MEN";
 
 export default function GuideView() {
   const [tab, setTab] = useState<GuideTab>("ホルモン軸");
@@ -10,7 +10,7 @@ export default function GuideView() {
     <div className="space-y-4">
       {/* サブタブ */}
       <div className="flex gap-2 overflow-x-auto pb-1">
-        {(["ホルモン軸", "副腎腫瘤", "クッシング", "PA", "遺伝性MEN"] as GuideTab[]).map(t => (
+        {(["ホルモン軸", "副腎腫瘤", "クッシング", "PA", "褐色細胞腫", "遺伝性MEN"] as GuideTab[]).map(t => (
           <button
             key={t}
             onClick={() => setTab(t)}
@@ -165,77 +165,6 @@ export default function GuideView() {
           <div className="mt-4 rounded-xl bg-gray-800/50 border border-gray-700 p-3">
             <p className="text-xs font-bold text-gray-300 mb-2">⚠️ 腫瘍が4cm以上の場合</p>
             <p className="text-xs text-gray-400">ホルモン活性の有無に関わらず悪性腫瘍を疑い外科的切除を検討する</p>
-          </div>
-
-          {/* 5H 症候 */}
-          <div className="rounded-xl bg-red-950/20 border border-red-700/50 p-3 space-y-2">
-            <p className="text-xs font-bold text-red-300">💊 5H：褐色細胞腫の典型症状</p>
-            <div className="space-y-1 text-xs">
-              {[
-                { h: "Headache", jp: "頭痛" },
-                { h: "Hyperhidrosis", jp: "発汗過多" },
-                { h: "Hypertension", jp: "高血圧" },
-                { h: "Hypermetabolism", jp: "代謝亢進（体重減少・耐糖能異常）" },
-                { h: "Hyperglycemia", jp: "高血糖" },
-              ].map(item => (
-                <div key={item.h} className="flex gap-2">
-                  <span className="text-red-400 font-bold shrink-0 w-28">{item.h}</span>
-                  <span className="text-gray-300">{item.jp}</span>
-                </div>
-              ))}
-            </div>
-            <div className="grid grid-cols-3 gap-2 text-xs mt-1 pt-2 border-t border-red-700/30">
-              <div className="text-center"><p className="text-gray-400">遺伝性</p><p className="text-red-300 font-bold">30–40%</p></div>
-              <div className="text-center"><p className="text-gray-400">副腎外</p><p className="text-red-300 font-bold">15–20%</p></div>
-              <div className="text-center"><p className="text-gray-400">悪性</p><p className="text-red-300 font-bold">10–15%</p></div>
-            </div>
-          </div>
-
-          {/* MEN2 */}
-          <div className="rounded-xl bg-purple-950/20 border border-purple-700/50 p-3 space-y-2">
-            <p className="text-xs font-bold text-purple-300">🧬 MEN2：褐色細胞腫との関連</p>
-            <div className="space-y-1 text-xs">
-              <div className="grid grid-cols-2 gap-x-3 gap-y-1">
-                <span className="text-gray-400">褐色細胞腫合併</span><span className="text-purple-300 font-bold">約50%</span>
-                <span className="text-gray-400">甲状腺髄様癌</span><span className="text-purple-300 font-bold">ほぼ100%</span>
-                <span className="text-gray-400">副甲状腺機能亢進</span><span className="text-gray-300">MEN2Aのみ</span>
-                <span className="text-gray-400">原因遺伝子</span><span className="text-yellow-300 font-bold">RET変異</span>
-              </div>
-              <div className="mt-1 pt-1 border-t border-purple-700/30 space-y-0.5">
-                <p className="text-gray-300"><span className="text-purple-400 font-bold">MEN2A：</span>褐色細胞腫＋甲状腺髄様癌＋副甲状腺機能亢進</p>
-                <p className="text-gray-300"><span className="text-purple-400 font-bold">MEN2B：</span>褐色細胞腫＋甲状腺髄様癌＋粘膜神経腫</p>
-              </div>
-            </div>
-          </div>
-
-          {/* VHL */}
-          <div className="rounded-xl bg-blue-950/20 border border-blue-700/50 p-3 space-y-2">
-            <p className="text-xs font-bold text-blue-300">🔬 VHL病（von Hippel–Lindau）：腫瘍スペクトラム</p>
-            <div className="text-xs space-y-0.5 mb-2">
-              <p className="text-gray-400">常染色体優性 / VHL遺伝子 / HIF分解障害→血管新生亢進</p>
-            </div>
-            <div className="space-y-1 text-xs">
-              {[
-                { lesion: "血管芽腫（小脳・脊髄・網膜）", freq: "60–80%" },
-                { lesion: "腎細胞癌（RCC・多発両側）★予後規定", freq: "40–70%" },
-                { lesion: "褐色細胞腫/パラガングリオーマ", freq: "10–20%" },
-                { lesion: "膵嚢胞", freq: "50–70%" },
-                { lesion: "膵NET（pNET）", freq: "10–20%" },
-                { lesion: "内リンパ嚢腫瘍（ELST・難聴）", freq: "数%" },
-              ].map(item => (
-                <div key={item.lesion} className="flex justify-between">
-                  <span className="text-gray-300">{item.lesion}</span>
-                  <span className="text-blue-300 font-bold shrink-0 ml-2">{item.freq}</span>
-                </div>
-              ))}
-            </div>
-            <div className="mt-2 pt-2 border-t border-blue-700/30 text-xs space-y-0.5">
-              <p className="text-blue-400 font-semibold">分類（褐色細胞腫の有無）</p>
-              <p className="text-gray-300">Type 1：褐色細胞腫なし・RCCあり</p>
-              <p className="text-gray-300">Type 2A/2B：褐色細胞腫あり（2BはRCCリスク高）</p>
-              <p className="text-gray-300">Type 2C：褐色細胞腫のみ</p>
-              <p className="text-yellow-300 mt-1">⚠️ 若年RCC・両側pheo → VHLを疑う</p>
-            </div>
           </div>
         </div>
       )}
@@ -410,6 +339,88 @@ export default function GuideView() {
             <p className="font-bold text-white mb-1">治療方針</p>
             <p className="text-gray-300">一側性（腺腫）→ 腹腔鏡下副腎摘除術</p>
             <p className="text-gray-300">両側性 → ミネラルコルチコイド受容体拮抗薬（MRA：スピロノラクトン等）</p>
+          </div>
+        </div>
+      )}
+
+      {/* ── 褐色細胞腫 ── */}
+      {tab === "褐色細胞腫" && (
+        <div className="space-y-3">
+          <p className="text-xs text-gray-500 px-1">褐色細胞腫・パラガングリオーマの臨床知識</p>
+
+          {/* 5H 症候 */}
+          <div className="rounded-xl bg-red-950/20 border border-red-700/50 p-3 space-y-2">
+            <p className="text-xs font-bold text-red-300">💊 5H：褐色細胞腫の典型症状</p>
+            <div className="space-y-1 text-xs">
+              {[
+                { h: "Headache", jp: "頭痛" },
+                { h: "Hyperhidrosis", jp: "発汗過多" },
+                { h: "Hypertension", jp: "高血圧" },
+                { h: "Hypermetabolism", jp: "代謝亢進（体重減少・耐糖能異常）" },
+                { h: "Hyperglycemia", jp: "高血糖" },
+              ].map(item => (
+                <div key={item.h} className="flex gap-2">
+                  <span className="text-red-400 font-bold shrink-0 w-32">{item.h}</span>
+                  <span className="text-gray-300">{item.jp}</span>
+                </div>
+              ))}
+            </div>
+            <div className="grid grid-cols-3 gap-2 text-xs mt-1 pt-2 border-t border-red-700/30">
+              <div className="text-center"><p className="text-gray-400">遺伝性</p><p className="text-red-300 font-bold">30–40%</p></div>
+              <div className="text-center"><p className="text-gray-400">副腎外</p><p className="text-red-300 font-bold">15–20%</p></div>
+              <div className="text-center"><p className="text-gray-400">悪性</p><p className="text-red-300 font-bold">10–15%</p></div>
+            </div>
+            <div className="bg-yellow-950/30 border border-yellow-700/40 rounded p-2 text-xs mt-1">
+              <p className="text-yellow-400 font-semibold mb-1">⚠️ 盲点</p>
+              <p className="text-gray-300">三徴（頭痛・動悸・発汗）がなくても褐色細胞腫は存在する</p>
+              <p className="text-gray-300">無症候性は30%以上</p>
+            </div>
+          </div>
+
+          {/* MEN2 */}
+          <div className="rounded-xl bg-purple-950/20 border border-purple-700/50 p-3 space-y-2">
+            <p className="text-xs font-bold text-purple-300">🧬 MEN2：褐色細胞腫との関連（RET変異 / 常染色体優性）</p>
+            <div className="space-y-1 text-xs">
+              <div className="grid grid-cols-2 gap-x-3 gap-y-1">
+                <span className="text-gray-400">褐色細胞腫合併</span><span className="text-purple-300 font-bold">約50%</span>
+                <span className="text-gray-400">甲状腺髄様癌</span><span className="text-purple-300 font-bold">ほぼ100%</span>
+                <span className="text-gray-400">副甲状腺機能亢進</span><span className="text-gray-300">MEN2Aのみ</span>
+              </div>
+              <div className="mt-2 pt-2 border-t border-purple-700/30 space-y-1">
+                <p className="text-gray-300"><span className="text-purple-400 font-bold">MEN2A：</span>褐色細胞腫＋甲状腺髄様癌＋副甲状腺機能亢進</p>
+                <p className="text-gray-300"><span className="text-purple-400 font-bold">MEN2B：</span>褐色細胞腫＋甲状腺髄様癌＋粘膜神経腫・マルファン体型</p>
+                <p className="text-gray-300"><span className="text-purple-400 font-bold">MEN2C：</span>褐色細胞腫のみ</p>
+              </div>
+            </div>
+          </div>
+
+          {/* VHL */}
+          <div className="rounded-xl bg-blue-950/20 border border-blue-700/50 p-3 space-y-2">
+            <p className="text-xs font-bold text-blue-300">🔬 VHL病（von Hippel–Lindau）：腫瘍スペクトラム</p>
+            <p className="text-gray-400 text-xs">常染色体優性 / VHL遺伝子 / HIF分解障害 → 血管新生亢進</p>
+            <div className="space-y-1 text-xs">
+              {[
+                { lesion: "血管芽腫（小脳・脊髄・網膜）", freq: "60–80%" },
+                { lesion: "腎細胞癌（RCC・多発両側）★予後規定", freq: "40–70%" },
+                { lesion: "褐色細胞腫/パラガングリオーマ", freq: "10–20%" },
+                { lesion: "膵嚢胞", freq: "50–70%" },
+                { lesion: "膵NET（pNET）", freq: "10–20%" },
+                { lesion: "内リンパ嚢腫瘍（ELST・難聴）", freq: "数%" },
+              ].map(item => (
+                <div key={item.lesion} className="flex justify-between">
+                  <span className="text-gray-300">{item.lesion}</span>
+                  <span className="text-blue-300 font-bold shrink-0 ml-2">{item.freq}</span>
+                </div>
+              ))}
+            </div>
+            <div className="mt-2 pt-2 border-t border-blue-700/30 text-xs space-y-1">
+              <p className="text-blue-400 font-semibold">分類（褐色細胞腫の有無）</p>
+              <p className="text-gray-300">Type 1：褐色細胞腫なし・RCCあり</p>
+              <p className="text-gray-300">Type 2A：褐色細胞腫あり・RCCリスク低</p>
+              <p className="text-gray-300">Type 2B：褐色細胞腫あり・RCCリスク高</p>
+              <p className="text-gray-300">Type 2C：褐色細胞腫のみ</p>
+              <p className="text-yellow-300 mt-1">⚠️ 若年RCC・両側pheo → VHLを疑う / 褐色細胞腫はノルアドレナリン優位</p>
+            </div>
           </div>
         </div>
       )}
