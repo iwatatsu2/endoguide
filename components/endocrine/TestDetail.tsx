@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useRef } from "react";
-import { EndocrineTest } from "@/data/endocrineTests";
+import { EndocrineTest, ClinicalNote } from "@/data/endocrineTests";
 import HormoneFlow from "./HormoneFlow";
 
 // ─── カラーマップ ─────────────────────────────────────
@@ -22,6 +22,7 @@ const SECTIONS = [
   { id: "sec-judgment",  label: "判定" },
   { id: "sec-interpret", label: "解釈" },
   { id: "sec-caution",   label: "注意" },
+  { id: "sec-clinical",  label: "臨床知識" },
   { id: "sec-report",    label: "報告" },
 ];
 
@@ -249,7 +250,56 @@ export default function TestDetail({ test }: { test: EndocrineTest }) {
           )}
         </Card>
 
-        {/* ⑥ 上級医報告 */}
+        {/* ⑥ 臨床知識 */}
+        {test.clinicalNotes && test.clinicalNotes.length > 0 && (
+          <Card id="sec-clinical" className="border-purple-100">
+            <SectionTitle emoji="🧠" title="臨床知識" />
+            <div className="space-y-4">
+              {test.clinicalNotes.map((note: ClinicalNote, ni: number) => (
+                <div key={ni} className="bg-purple-50 rounded-xl p-3">
+                  <p className="text-xs font-bold text-purple-700 mb-2">
+                    {note.emoji && <span className="mr-1">{note.emoji}</span>}
+                    {note.title}
+                  </p>
+                  <div className="space-y-3">
+                    {note.blocks.map((block, bi) => (
+                      <div key={bi}>
+                        {block.heading && (
+                          <p className="text-xs font-semibold text-purple-600 mb-1.5">{block.heading}</p>
+                        )}
+                        {block.text && (
+                          <p className="text-xs text-gray-700 leading-relaxed">{block.text}</p>
+                        )}
+                        {block.rows && (
+                          <div className="space-y-1">
+                            {block.rows.map((row, ri) => (
+                              <div key={ri} className="flex items-start justify-between gap-2 text-xs">
+                                <div className="flex items-start gap-1.5 flex-1">
+                                  <span className="text-purple-400 flex-shrink-0 mt-0.5">▸</span>
+                                  <div>
+                                    <span className="font-semibold text-gray-800">{row.label}</span>
+                                    {row.sublabel && (
+                                      <span className="text-gray-500 ml-1">（{row.sublabel}）</span>
+                                    )}
+                                  </div>
+                                </div>
+                                {row.value && (
+                                  <span className="text-purple-700 font-bold flex-shrink-0">{row.value}</span>
+                                )}
+                              </div>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </Card>
+        )}
+
+        {/* ⑦ 上級医報告 */}
         <Card id="sec-report" className="bg-blue-50 border-blue-100">
           <SectionTitle emoji="📞" title="上級医への報告テンプレ" />
           <div className="bg-white rounded-xl p-4 border border-blue-200">

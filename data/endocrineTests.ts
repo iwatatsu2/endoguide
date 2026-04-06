@@ -85,6 +85,24 @@ export interface HormoneFlowConfig {
   mechanismLabel: string;
 }
 
+export interface ClinicalNoteRow {
+  label: string;
+  sublabel?: string;
+  value?: string;
+}
+
+export interface ClinicalNoteBlock {
+  heading?: string;
+  rows?: ClinicalNoteRow[];
+  text?: string;
+}
+
+export interface ClinicalNote {
+  title: string;
+  emoji?: string;
+  blocks: ClinicalNoteBlock[];
+}
+
 export interface EndocrineTest {
   id: string;
   name: string;
@@ -106,6 +124,7 @@ export interface EndocrineTest {
   pitfalls: string[];
   reportPhrase: string;
   hormoneFlow: HormoneFlowConfig;
+  clinicalNotes?: ClinicalNote[];
 }
 
 // ─── 検査データ ────────────────────────────────────────
@@ -174,6 +193,74 @@ export const endocrineTests: EndocrineTest[] = [
       axisKey: "HPA", highlightTarget: "adrenal",
       mechanismLabel: "概日リズムに従い早朝に最高値\n深夜の抑制消失がクッシングの鍵",
     },
+    clinicalNotes: [
+      {
+        title: "クッシング症候群の身体所見・徴候",
+        emoji: "🩺",
+        blocks: [
+          {
+            heading: "体型変化",
+            rows: [
+              { label: "中心性肥満（体幹肥満）" },
+              { label: "満月様顔貌（moon face）" },
+              { label: "野牛肩（buffalo hump）" },
+              { label: "四肢は相対的に細い" },
+            ],
+          },
+          {
+            heading: "皮膚所見（診断価値が高い）",
+            rows: [
+              { label: "赤紫色皮膚線条（striae）", sublabel: "幅1cm以上、腹部・大腿" },
+              { label: "皮膚菲薄化・易出血性（皮下出血）" },
+              { label: "創傷治癒遅延" },
+              { label: "にきび・脂漏" },
+            ],
+          },
+          {
+            heading: "筋骨格",
+            rows: [
+              { label: "近位筋筋力低下（大腿・肩）" },
+              { label: "骨粗鬆症 → 圧迫骨折" },
+            ],
+          },
+          {
+            heading: "代謝・内分泌異常",
+            rows: [
+              { label: "高血圧" },
+              { label: "耐糖能異常〜糖尿病" },
+              { label: "脂質異常症" },
+              { label: "低K血症", sublabel: "ACTH依存性で特に顕著" },
+            ],
+          },
+          {
+            heading: "精神・神経・性腺",
+            rows: [
+              { label: "抑うつ・不安・不眠・認知機能低下" },
+              { label: "無月経・性欲低下・不妊" },
+              { label: "易感染性・日和見感染（重症例）" },
+            ],
+          },
+          {
+            heading: "見逃しやすい盲点",
+            rows: [
+              { label: "肥満＋糖尿病として扱われている" },
+              { label: "皮膚線条が「妊娠線」と誤認" },
+              { label: "筋力低下が加齢扱い" },
+              { label: "特に疑うべき組み合わせ", value: "紫色線条＋筋力低下＋高血圧" },
+            ],
+          },
+          {
+            heading: "スクリーニング適応",
+            rows: [
+              { label: "若年高血圧" },
+              { label: "コントロール不良糖尿病" },
+              { label: "原因不明骨折" },
+              { label: "典型皮膚所見" },
+            ],
+          },
+        ],
+      },
+    ],
   },
 
   {
@@ -512,6 +599,99 @@ export const endocrineTests: EndocrineTest[] = [
       axisKey: "Catecholamine", highlightTarget: "urine_metabolites",
       mechanismLabel: "副腎髄質のカテコラミン過剰産生を\n尿中代謝産物（メタネフリン類）で定量",
     },
+    clinicalNotes: [
+      {
+        title: "5H：褐色細胞腫の典型症状",
+        emoji: "💊",
+        blocks: [
+          {
+            heading: "5つのHで覚える古典的症候",
+            rows: [
+              { label: "Headache", sublabel: "頭痛" },
+              { label: "Hyperhidrosis", sublabel: "発汗過多" },
+              { label: "Hypertension", sublabel: "高血圧" },
+              { label: "Hypermetabolism", sublabel: "代謝亢進：体重減少・耐糖能異常など" },
+              { label: "Hyperglycemia", sublabel: "高血糖" },
+            ],
+          },
+          {
+            heading: "疫学・特徴",
+            rows: [
+              { label: "遺伝性", value: "約30–40%" },
+              { label: "副腎外（パラガングリオーマ）", value: "15–20%" },
+              { label: "悪性", value: "10–15%程度" },
+            ],
+          },
+        ],
+      },
+      {
+        title: "MEN2：褐色細胞腫との関連",
+        emoji: "🧬",
+        blocks: [
+          {
+            heading: "多発性内分泌腫瘍症2型（MEN2）合併頻度",
+            rows: [
+              { label: "褐色細胞腫", value: "約50%（MEN2A・2B共通）" },
+              { label: "甲状腺髄様癌", value: "ほぼ100%" },
+              { label: "副甲状腺機能亢進", value: "MEN2Aのみ" },
+            ],
+          },
+          {
+            heading: "サブタイプと原因遺伝子",
+            rows: [
+              { label: "MEN2A", sublabel: "褐色細胞腫＋甲状腺髄様癌＋副甲状腺機能亢進" },
+              { label: "MEN2B", sublabel: "褐色細胞腫＋甲状腺髄様癌＋粘膜神経腫" },
+              { label: "原因遺伝子", value: "RET変異" },
+            ],
+          },
+        ],
+      },
+      {
+        title: "VHL病（von Hippel–Lindau）：腫瘍スペクトラム",
+        emoji: "🔬",
+        blocks: [
+          {
+            heading: "基本情報",
+            rows: [
+              { label: "遺伝形式", value: "常染色体優性" },
+              { label: "原因遺伝子", value: "VHL遺伝子" },
+              { label: "機序", value: "HIF分解障害 → 血管新生亢進" },
+            ],
+          },
+          {
+            heading: "主要病変（頻度順）",
+            rows: [
+              { label: "血管芽腫（小脳・脊髄・網膜）", value: "約60–80%" },
+              { label: "腎細胞癌（clear cell RCC・多発両側）", value: "約40–70%" },
+              { label: "褐色細胞腫／パラガングリオーマ", value: "約10–20%（Type依存）" },
+              { label: "膵嚢胞", value: "約50–70%" },
+              { label: "膵神経内分泌腫瘍（pNET）", value: "約10–20%" },
+              { label: "内リンパ嚢腫瘍（ELST・難聴の原因）", value: "数%" },
+              { label: "精巣上体嚢胞腺腫（男性）", sublabel: "良性" },
+            ],
+          },
+          {
+            heading: "臨床分類（褐色細胞腫の有無）",
+            rows: [
+              { label: "Type 1", sublabel: "褐色細胞腫なし・RCCあり" },
+              { label: "Type 2A", sublabel: "褐色細胞腫あり・RCCリスク低" },
+              { label: "Type 2B", sublabel: "褐色細胞腫あり・RCCリスク高" },
+              { label: "Type 2C", sublabel: "褐色細胞腫のみ" },
+            ],
+          },
+          {
+            heading: "臨床的ポイント・盲点",
+            rows: [
+              { label: "最重要死亡原因", value: "腎細胞癌" },
+              { label: "若年のRCC", sublabel: "VHLを疑う" },
+              { label: "両側pheo", sublabel: "VHL or MEN2 を鑑別" },
+              { label: "網膜血管腫", sublabel: "初発になりうる" },
+              { label: "褐色細胞腫の特徴", value: "ノルアドレナリン優位" },
+            ],
+          },
+        ],
+      },
+    ],
   },
 
   // ════════════════════════════════
@@ -1134,6 +1314,50 @@ export const endocrineTests: EndocrineTest[] = [
       axisKey: "Pancreas", highlightTarget: "beta_cell",
       mechanismLabel: "絶食で低血糖を誘発 →\n正常ならインスリン抑制・腫瘍では抑制されない",
     },
+    clinicalNotes: [
+      {
+        title: "MEN1の臨床像（頻度順）",
+        emoji: "🧬",
+        blocks: [
+          {
+            heading: "三主徴（MEN1遺伝子・menin変異／常染色体優性）",
+            rows: [
+              { label: "副甲状腺腫瘍", value: "＞90%" },
+              { label: "下垂体腺腫", value: "約30–40%" },
+              { label: "膵神経内分泌腫瘍（pNET）", value: "約30–70%" },
+            ],
+          },
+          {
+            heading: "下垂体腺腫（頻度順）",
+            rows: [
+              { label: "プロラクチノーマ（PRL産生）", value: "約60–65%" },
+              { label: "GH産生腺腫（先端巨大症）", value: "約20–25%" },
+              { label: "ACTH産生腺腫（クッシング病）", value: "約5–10%" },
+              { label: "非機能性腺腫", value: "約10–15%" },
+            ],
+          },
+          {
+            heading: "膵NET（pNET）（頻度順）",
+            rows: [
+              { label: "ガストリノーマ（Zollinger-Ellison症候群）", value: "約40–60%" },
+              { label: "非機能性pNET", value: "約20–40%" },
+              { label: "インスリノーマ", value: "約10–20%" },
+              { label: "グルカゴノーマ", value: "＜5%" },
+              { label: "VIPoma / ソマトスタチノーマ", value: "＜1–2%" },
+            ],
+          },
+          {
+            heading: "臨床的ポイント",
+            rows: [
+              { label: "生命予後に最も影響", value: "膵NET（非機能性・ガストリノーマ）" },
+              { label: "MEN1の初発症状", value: "約半数が副甲状腺機能亢進症" },
+              { label: "下垂体腫瘍の特徴", value: "孤発例より大型（macroadenoma多く、治療抵抗性）" },
+              { label: "スクリーニング対象", value: "若年発症・多発性腫瘍はMEN1を疑う" },
+            ],
+          },
+        ],
+      },
+    ],
   },
 
   {
