@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 
-type GuideTab = "ホルモン軸" | "副腎腫瘤" | "クッシング" | "PA";
+type GuideTab = "ホルモン軸" | "副腎腫瘤" | "クッシング" | "PA" | "遺伝性MEN";
 
 export default function GuideView() {
   const [tab, setTab] = useState<GuideTab>("ホルモン軸");
@@ -10,7 +10,7 @@ export default function GuideView() {
     <div className="space-y-4">
       {/* サブタブ */}
       <div className="flex gap-2 overflow-x-auto pb-1">
-        {(["ホルモン軸", "副腎腫瘤", "クッシング", "PA"] as GuideTab[]).map(t => (
+        {(["ホルモン軸", "副腎腫瘤", "クッシング", "PA", "遺伝性MEN"] as GuideTab[]).map(t => (
           <button
             key={t}
             onClick={() => setTab(t)}
@@ -166,6 +166,77 @@ export default function GuideView() {
             <p className="text-xs font-bold text-gray-300 mb-2">⚠️ 腫瘍が4cm以上の場合</p>
             <p className="text-xs text-gray-400">ホルモン活性の有無に関わらず悪性腫瘍を疑い外科的切除を検討する</p>
           </div>
+
+          {/* 5H 症候 */}
+          <div className="rounded-xl bg-red-950/20 border border-red-700/50 p-3 space-y-2">
+            <p className="text-xs font-bold text-red-300">💊 5H：褐色細胞腫の典型症状</p>
+            <div className="space-y-1 text-xs">
+              {[
+                { h: "Headache", jp: "頭痛" },
+                { h: "Hyperhidrosis", jp: "発汗過多" },
+                { h: "Hypertension", jp: "高血圧" },
+                { h: "Hypermetabolism", jp: "代謝亢進（体重減少・耐糖能異常）" },
+                { h: "Hyperglycemia", jp: "高血糖" },
+              ].map(item => (
+                <div key={item.h} className="flex gap-2">
+                  <span className="text-red-400 font-bold shrink-0 w-28">{item.h}</span>
+                  <span className="text-gray-300">{item.jp}</span>
+                </div>
+              ))}
+            </div>
+            <div className="grid grid-cols-3 gap-2 text-xs mt-1 pt-2 border-t border-red-700/30">
+              <div className="text-center"><p className="text-gray-400">遺伝性</p><p className="text-red-300 font-bold">30–40%</p></div>
+              <div className="text-center"><p className="text-gray-400">副腎外</p><p className="text-red-300 font-bold">15–20%</p></div>
+              <div className="text-center"><p className="text-gray-400">悪性</p><p className="text-red-300 font-bold">10–15%</p></div>
+            </div>
+          </div>
+
+          {/* MEN2 */}
+          <div className="rounded-xl bg-purple-950/20 border border-purple-700/50 p-3 space-y-2">
+            <p className="text-xs font-bold text-purple-300">🧬 MEN2：褐色細胞腫との関連</p>
+            <div className="space-y-1 text-xs">
+              <div className="grid grid-cols-2 gap-x-3 gap-y-1">
+                <span className="text-gray-400">褐色細胞腫合併</span><span className="text-purple-300 font-bold">約50%</span>
+                <span className="text-gray-400">甲状腺髄様癌</span><span className="text-purple-300 font-bold">ほぼ100%</span>
+                <span className="text-gray-400">副甲状腺機能亢進</span><span className="text-gray-300">MEN2Aのみ</span>
+                <span className="text-gray-400">原因遺伝子</span><span className="text-yellow-300 font-bold">RET変異</span>
+              </div>
+              <div className="mt-1 pt-1 border-t border-purple-700/30 space-y-0.5">
+                <p className="text-gray-300"><span className="text-purple-400 font-bold">MEN2A：</span>褐色細胞腫＋甲状腺髄様癌＋副甲状腺機能亢進</p>
+                <p className="text-gray-300"><span className="text-purple-400 font-bold">MEN2B：</span>褐色細胞腫＋甲状腺髄様癌＋粘膜神経腫</p>
+              </div>
+            </div>
+          </div>
+
+          {/* VHL */}
+          <div className="rounded-xl bg-blue-950/20 border border-blue-700/50 p-3 space-y-2">
+            <p className="text-xs font-bold text-blue-300">🔬 VHL病（von Hippel–Lindau）：腫瘍スペクトラム</p>
+            <div className="text-xs space-y-0.5 mb-2">
+              <p className="text-gray-400">常染色体優性 / VHL遺伝子 / HIF分解障害→血管新生亢進</p>
+            </div>
+            <div className="space-y-1 text-xs">
+              {[
+                { lesion: "血管芽腫（小脳・脊髄・網膜）", freq: "60–80%" },
+                { lesion: "腎細胞癌（RCC・多発両側）★予後規定", freq: "40–70%" },
+                { lesion: "褐色細胞腫/パラガングリオーマ", freq: "10–20%" },
+                { lesion: "膵嚢胞", freq: "50–70%" },
+                { lesion: "膵NET（pNET）", freq: "10–20%" },
+                { lesion: "内リンパ嚢腫瘍（ELST・難聴）", freq: "数%" },
+              ].map(item => (
+                <div key={item.lesion} className="flex justify-between">
+                  <span className="text-gray-300">{item.lesion}</span>
+                  <span className="text-blue-300 font-bold shrink-0 ml-2">{item.freq}</span>
+                </div>
+              ))}
+            </div>
+            <div className="mt-2 pt-2 border-t border-blue-700/30 text-xs space-y-0.5">
+              <p className="text-blue-400 font-semibold">分類（褐色細胞腫の有無）</p>
+              <p className="text-gray-300">Type 1：褐色細胞腫なし・RCCあり</p>
+              <p className="text-gray-300">Type 2A/2B：褐色細胞腫あり（2BはRCCリスク高）</p>
+              <p className="text-gray-300">Type 2C：褐色細胞腫のみ</p>
+              <p className="text-yellow-300 mt-1">⚠️ 若年RCC・両側pheo → VHLを疑う</p>
+            </div>
+          </div>
         </div>
       )}
 
@@ -174,9 +245,44 @@ export default function GuideView() {
         <div className="space-y-3">
           <p className="text-xs text-gray-500 px-1">クッシング症候群の診断フローチャート</p>
 
-          <div className="rounded-xl bg-gray-800/50 border border-gray-700 p-3 text-xs text-gray-300 space-y-1">
-            <p className="font-bold text-white">クッシング徴候</p>
-            <p>中心性肥満・満月様顔貌・野牛肩・皮膚線条・筋力低下・骨粗鬆症・高血糖・高血圧</p>
+          {/* 身体所見・徴候（詳細） */}
+          <div className="rounded-xl bg-orange-950/20 border border-orange-700/50 p-3 space-y-3">
+            <p className="text-xs font-bold text-orange-300">🩺 クッシング症候群の身体所見（診断に重要）</p>
+            <div className="grid grid-cols-2 gap-2 text-xs">
+              <div className="space-y-1">
+                <p className="text-orange-400 font-semibold">体型変化</p>
+                <p className="text-gray-300">中心性肥満（体幹肥満）</p>
+                <p className="text-gray-300">満月様顔貌（moon face）</p>
+                <p className="text-gray-300">野牛肩（buffalo hump）</p>
+                <p className="text-gray-400">四肢は相対的に細い</p>
+              </div>
+              <div className="space-y-1">
+                <p className="text-orange-400 font-semibold">皮膚（診断価値高）</p>
+                <p className="text-yellow-300 font-semibold">赤紫色線条 ★最重要</p>
+                <p className="text-gray-400 text-xs">幅1cm以上・腹部/大腿</p>
+                <p className="text-gray-300">皮膚菲薄化・易出血</p>
+                <p className="text-gray-300">創傷治癒遅延</p>
+              </div>
+              <div className="space-y-1">
+                <p className="text-orange-400 font-semibold">筋骨格</p>
+                <p className="text-gray-300">近位筋筋力低下</p>
+                <p className="text-gray-300">骨粗鬆症 → 圧迫骨折</p>
+              </div>
+              <div className="space-y-1">
+                <p className="text-orange-400 font-semibold">代謝・その他</p>
+                <p className="text-gray-300">高血圧・耐糖能異常</p>
+                <p className="text-gray-300">低K血症（ACTH依存性）</p>
+                <p className="text-gray-300">抑うつ・不眠</p>
+                <p className="text-gray-300">無月経・性欲低下</p>
+              </div>
+            </div>
+            <div className="bg-yellow-950/30 border border-yellow-700/40 rounded p-2 text-xs">
+              <p className="text-yellow-400 font-semibold mb-1">⚠️ 見逃しやすい盲点</p>
+              <p className="text-gray-300">肥満＋糖尿病として扱われている</p>
+              <p className="text-gray-300">皮膚線条を「妊娠線」と誤認</p>
+              <p className="text-gray-300">筋力低下を加齢扱い</p>
+              <p className="text-yellow-300 mt-1 font-semibold">→「紫色線条＋筋力低下＋高血圧」で積極的にスクリーニング</p>
+            </div>
           </div>
 
           <FlowArrow />
@@ -304,6 +410,118 @@ export default function GuideView() {
             <p className="font-bold text-white mb-1">治療方針</p>
             <p className="text-gray-300">一側性（腺腫）→ 腹腔鏡下副腎摘除術</p>
             <p className="text-gray-300">両側性 → ミネラルコルチコイド受容体拮抗薬（MRA：スピロノラクトン等）</p>
+          </div>
+        </div>
+      )}
+
+      {/* ── 遺伝性MEN ── */}
+      {tab === "遺伝性MEN" && (
+        <div className="space-y-3">
+          <p className="text-xs text-gray-500 px-1">MEN1・MEN2の臨床像と頻度</p>
+
+          {/* MEN1 */}
+          <div className="rounded-xl bg-indigo-950/20 border border-indigo-700/50 p-3 space-y-3">
+            <p className="text-xs font-bold text-indigo-300">🧬 MEN1（menin変異 / 常染色体優性）</p>
+
+            <div className="space-y-1 text-xs">
+              <p className="text-indigo-400 font-semibold">三主徴</p>
+              {[
+                { name: "副甲状腺腫瘍", freq: "＞90%" },
+                { name: "下垂体腺腫", freq: "30–40%" },
+                { name: "膵神経内分泌腫瘍（pNET）", freq: "30–70%" },
+              ].map(i => (
+                <div key={i.name} className="flex justify-between">
+                  <span className="text-gray-300">{i.name}</span>
+                  <span className="text-indigo-300 font-bold">{i.freq}</span>
+                </div>
+              ))}
+            </div>
+
+            <div className="space-y-1 text-xs">
+              <p className="text-indigo-400 font-semibold">下垂体腺腫（頻度順）</p>
+              {[
+                { name: "プロラクチノーマ（PRL産生）", freq: "60–65%" },
+                { name: "GH産生腺腫（先端巨大症）", freq: "20–25%" },
+                { name: "ACTH産生腺腫（クッシング病）", freq: "5–10%" },
+                { name: "非機能性腺腫", freq: "10–15%" },
+              ].map(i => (
+                <div key={i.name} className="flex justify-between">
+                  <span className="text-gray-300">{i.name}</span>
+                  <span className="text-indigo-300 font-bold">{i.freq}</span>
+                </div>
+              ))}
+              <p className="text-gray-500 text-xs mt-1">孤発例より大型・治療抵抗性の傾向</p>
+            </div>
+
+            <div className="space-y-1 text-xs">
+              <p className="text-indigo-400 font-semibold">膵NET・pNET（頻度順）</p>
+              {[
+                { name: "ガストリノーマ（Zollinger-Ellison症候群）", freq: "40–60%" },
+                { name: "非機能性pNET", freq: "20–40%" },
+                { name: "インスリノーマ", freq: "10–20%" },
+                { name: "グルカゴノーマ", freq: "＜5%" },
+                { name: "VIPoma / ソマトスタチノーマ", freq: "＜1–2%" },
+              ].map(i => (
+                <div key={i.name} className="flex justify-between">
+                  <span className="text-gray-300">{i.name}</span>
+                  <span className="text-indigo-300 font-bold">{i.freq}</span>
+                </div>
+              ))}
+            </div>
+
+            <div className="bg-yellow-950/30 border border-yellow-700/40 rounded p-2 text-xs space-y-0.5">
+              <p className="text-yellow-400 font-semibold">臨床ポイント</p>
+              <p className="text-gray-300">生命予後に最も影響 → 膵NET（非機能性・ガストリノーマ）</p>
+              <p className="text-gray-300">初発症状 → 約半数が副甲状腺機能亢進症</p>
+              <p className="text-yellow-300">若年発症・多発性腫瘍 → MEN1を疑いスクリーニング</p>
+            </div>
+          </div>
+
+          {/* MEN2 */}
+          <div className="rounded-xl bg-purple-950/20 border border-purple-700/50 p-3 space-y-2">
+            <p className="text-xs font-bold text-purple-300">🧬 MEN2（RET変異 / 常染色体優性）</p>
+            <div className="space-y-1 text-xs">
+              <p className="text-purple-400 font-semibold">合併腫瘍</p>
+              {[
+                { name: "甲状腺髄様癌", freq: "ほぼ100%", note: "MEN2A・2B共通" },
+                { name: "褐色細胞腫", freq: "約50%", note: "MEN2A・2B共通" },
+                { name: "副甲状腺機能亢進", freq: "〜20%", note: "MEN2Aのみ" },
+              ].map(i => (
+                <div key={i.name} className="flex justify-between items-start gap-2">
+                  <div>
+                    <span className="text-gray-300">{i.name}</span>
+                    <span className="text-gray-500 ml-1">（{i.note}）</span>
+                  </div>
+                  <span className="text-purple-300 font-bold shrink-0">{i.freq}</span>
+                </div>
+              ))}
+            </div>
+            <div className="mt-1 pt-1 border-t border-purple-700/30 text-xs space-y-0.5">
+              <p className="text-gray-300"><span className="text-purple-400 font-bold">MEN2B：</span>粘膜神経腫・マルファン体型も合併</p>
+              <p className="text-gray-300"><span className="text-purple-400 font-bold">MEN2C：</span>褐色細胞腫のみ</p>
+            </div>
+          </div>
+
+          {/* 鑑別まとめ */}
+          <div className="rounded-xl bg-gray-800/50 border border-gray-700 p-3 text-xs space-y-1">
+            <p className="font-bold text-white mb-1">MEN1 vs MEN2 鑑別ポイント</p>
+            <div className="grid grid-cols-3 gap-1 text-xs">
+              <span className="text-gray-500"></span>
+              <span className="text-indigo-300 font-bold text-center">MEN1</span>
+              <span className="text-purple-300 font-bold text-center">MEN2</span>
+              <span className="text-gray-400">遺伝子</span>
+              <span className="text-gray-300 text-center">MEN1（menin）</span>
+              <span className="text-gray-300 text-center">RET</span>
+              <span className="text-gray-400">副甲状腺</span>
+              <span className="text-gray-300 text-center">＞90%</span>
+              <span className="text-gray-300 text-center">2Aのみ</span>
+              <span className="text-gray-400">褐色細胞腫</span>
+              <span className="text-gray-500 text-center">なし</span>
+              <span className="text-gray-300 text-center">約50%</span>
+              <span className="text-gray-400">膵NET</span>
+              <span className="text-gray-300 text-center">30–70%</span>
+              <span className="text-gray-500 text-center">なし</span>
+            </div>
           </div>
         </div>
       )}
