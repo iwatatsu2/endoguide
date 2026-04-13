@@ -839,10 +839,11 @@ export const endocrineTests: EndocrineTest[] = [
       "FT4・FT3・TSH基礎値の確認",
     ],
     timeline: [
-      { time: "0分",  action: "採血（TSH・PRL・FT4）", isKey: true },
-      { time: "0分",  action: "TRH 500μg IV（緩徐に30秒以上かけて）投与", isKey: true },
-      { time: "30分", action: "採血（TSH・PRL）", isKey: true },
-      { time: "60分", action: "採血（TSH）", isKey: true },
+      { time: "0分",   action: "採血（TSH・PRL・FT4）", isKey: true },
+      { time: "0分",   action: "TRH 500μg IV（緩徐に30秒以上かけて）投与", isKey: true },
+      { time: "30分",  action: "採血（TSH・PRL）", isKey: true },
+      { time: "60分",  action: "採血（TSH・PRL）", isKey: true },
+      { time: "120分", action: "採血（TSH）", isKey: true, note: "遅延反応（視床下部性）の評価に重要" },
     ],
     judgments: [
       {
@@ -850,7 +851,7 @@ export const endocrineTests: EndocrineTest[] = [
         unit: "μIU/mL", threshold: "6", isNormalAbove: true,
         normalLabel: "正常（頂値>6μIU/mL）",
         abnormalLabel: "下垂体性低下症疑い",
-        note: "遅延反応（60分値>30分値）は視床下部性を示唆。FT3：120分値≥前値1.3倍で正常",
+        note: "遅延反応（60〜120分値>30分値）は視床下部性を示唆",
       },
       {
         parameter: "PRL頂値",
