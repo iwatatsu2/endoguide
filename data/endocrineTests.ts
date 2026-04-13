@@ -725,15 +725,15 @@ export const endocrineTests: EndocrineTest[] = [
     ],
     judgments: [
       {
-        parameter: "負荷後 PAC（血漿アルドステロン濃度）",
-        unit: "pg/mL", threshold: "60", isNormalAbove: false,
+        parameter: "負荷後 ARR（アルドステロン/レニン比）",
+        unit: "", threshold: "200", isNormalAbove: false,
         normalLabel: "抑制あり（PAは否定的）",
-        abnormalLabel: "陽性：PAC≥60かつARR≥200 / 暫定陽性：PAC≥60かつARR 100〜200",
-        note: "①PAC≥60かつARR≥200→陽性　②PAC≥60かつ100≤ARR<200→暫定陽性",
+        abnormalLabel: "ARR > 200 → PA確認試験陽性",
+        note: "負荷後60分または90分のARR > 200で陽性（原発性アルドステロン症診療ガイドライン2021）。PACの閾値は判定基準に含まれない",
       },
     ],
-    normalInterpretation: "カプトプリルによりAngII↓ → アルドステロンが正常に抑制（PAC<60pg/mL）→ PAは否定的。",
-    abnormalInterpretation: "PAC≥60pg/mLかつARR≥200 → PA確認試験陽性。PAC≥60かつARR 100〜200は暫定陽性。副腎CT・AVS（副腎静脈サンプリング）へ進む。",
+    normalInterpretation: "カプトプリルによりAngII↓ → アルドステロンが正常に抑制 → ARR低下 → PAは否定的。",
+    abnormalInterpretation: "負荷後ARR > 200 → PA確認試験陽性。副腎CT・AVS（副腎静脈サンプリング）へ進む。",
     cautions: [
       "初回内服後30〜60分は血圧低下に注意（特に高齢者・脱水）",
       "座位を保つことが条件 → 臥位では結果が変わる",
