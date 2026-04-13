@@ -458,7 +458,7 @@ export const endocrineTests: EndocrineTest[] = [
         unit: "μg/day", threshold: "正常上限×3", isNormalAbove: false,
         normalLabel: "クッシング症候群は否定的",
         abnormalLabel: "クッシング症候群強く疑う",
-        note: "正常上限×1〜3倍はпсевдо（偽性）クッシング（肥満・うつ・飲酒）との重なり多い。×3以上で確定的",
+        note: "正常上限×1〜3倍は偽性クッシング（肥満・うつ・飲酒）との重なり多い。×3以上で確定的",
       },
     ],
     normalInterpretation: "UFC正常範囲 → コルチゾール過剰産生はない。ただし周期性クッシングでは偽陰性あり → 繰り返し測定を検討。",
