@@ -1427,4 +1427,221 @@ export const endocrineTests: EndocrineTest[] = [
       mechanismLabel: "グルカゴンでβ細胞を刺激 →\nインスリノーマは過剰分泌後に反応性低血糖",
     },
   },
+
+  // ═══════════════════════════════════════════════════════════
+  // インスリン低血糖試験（ITT）
+  // ═══════════════════════════════════════════════════════════
+  {
+    id: "itt",
+    name: "インスリン低血糖試験（ITT）",
+    tagline: "下垂体ACTH・GH分泌予備能の gold standard",
+    essence: "低血糖ストレスに対するACTH・GH・cortisol分泌反応",
+    color: "red",
+    category: "副腎・HPA軸",
+    status: "available",
+    what: "レギュラーインスリンを静注して低血糖（≤45mg/dL）を誘発し、そのストレスに対する下垂体のACTH・GH分泌と副腎のcortisol分泌を評価する。下垂体機能低下症の診断におけるgold standardだが、低血糖のリスクがあるため慎重な管理が必要。",
+    indications: [
+      "汎下垂体機能低下症の確認（ACTH・GH分泌予備能評価）",
+      "成人GH分泌不全症（AGHD）の確定診断",
+      "副腎不全の原因鑑別（中枢性 vs 原発性）",
+    ],
+    preparations: [
+      "前日21時以降絶食",
+      "末梢静脈ライン確保（50%ブドウ糖液をすぐに投与できるよう準備）",
+      "基礎血糖・cortisol・ACTH・GH確認",
+      "医師が付き添える環境で実施（意識障害・痙攣のリスク）",
+    ],
+    timeline: [
+      { time: "0分",  action: "採血（Glucose・ACTH・cortisol・GH）", isKey: true },
+      { time: "0分",  action: "レギュラーインスリン 0.05〜0.1U/kg IV", isKey: true, note: "通常0.1U/kg。下垂体不全疑い例は0.05U/kgから" },
+      { time: "15分", action: "採血（Glucose）", isKey: false },
+      { time: "30分", action: "採血（Glucose・ACTH・cortisol・GH）", isKey: true },
+      { time: "45分", action: "採血（Glucose・ACTH・cortisol・GH）", isKey: true },
+      { time: "60分", action: "採血（Glucose・ACTH・cortisol・GH）", isKey: true },
+      { time: "90分", action: "採血（Glucose・ACTH・cortisol・GH）", isKey: true },
+      { time: "試験後", action: "食事摂取・血糖回復を確認して終了", isKey: false },
+    ],
+    judgments: [
+      {
+        parameter: "有効刺激の確認：血糖底値",
+        unit: "mg/dL", threshold: "45", isNormalAbove: false,
+        normalLabel: "有効な低血糖刺激（≤45mg/dL）",
+        abnormalLabel: "低血糖不十分 → 試験無効（インスリン追加投与を検討）",
+        note: "血糖が45mg/dL以下にならなければ試験は無効。低血糖症状（発汗・動悸・空腹感）の出現も確認",
+      },
+      {
+        parameter: "GH頂値",
+        unit: "ng/mL", threshold: "3", isNormalAbove: true,
+        normalLabel: "GH分泌能 正常",
+        abnormalLabel: "GH分泌不全",
+        note: "頂値≤3ng/mL → GH分泌不全。重症GH分泌不全：頂値≤1.8ng/mL",
+      },
+      {
+        parameter: "ACTH頂値",
+        unit: "pg/mL", threshold: "50", isNormalAbove: true,
+        normalLabel: "ACTH分泌能 正常",
+        abnormalLabel: "ACTH分泌不全疑い",
+        note: "正常：前値の1.5倍以上 or 頂値≥50pg/mL",
+      },
+      {
+        parameter: "cortisol頂値",
+        unit: "μg/dL", threshold: "18", isNormalAbove: true,
+        normalLabel: "副腎反応 正常",
+        abnormalLabel: "副腎不全疑い",
+        note: "正常：頂値>18μg/dL",
+      },
+    ],
+    normalInterpretation: "低血糖ストレスに対してGH・ACTH・cortisolが十分上昇 → 下垂体-副腎軸は正常。",
+    abnormalInterpretation: "GH≤3ng/mL → GH分泌不全。ACTH/cortisol反応不良 → 中枢性副腎不全。各測定値の頂値は30〜60分後に出現。",
+    cautions: [
+      "低血糖発作（意識障害・痙攣）のリスク → 必ず50%ブドウ糖液を手元に準備",
+      "血糖≤30mg/dLまたは意識障害時は直ちに50%ブドウ糖20mL IV",
+      "下垂体不全が疑われる場合はインスリン量を0.05U/kgに減量",
+      "試験後は必ず食事を摂取させ、血糖回復を確認してから帰宅",
+    ],
+    contraindications: [
+      "冠動脈疾患・虚血性心疾患",
+      "てんかん（低血糖で痙攣誘発）",
+      "重度の副腎不全が確実な患者（危険）",
+      "高齢者（相対的禁忌）",
+    ],
+    stopCriteria: [
+      "意識障害・痙攣 → 直ちに50%ブドウ糖20mL IV",
+      "血糖<30mg/dL → 50%ブドウ糖投与を検討",
+    ],
+    pitfalls: [
+      "血糖が45mg/dL以下にならなければ試験無効 → インスリン追加投与を検討",
+      "肥満・インスリン抵抗性の患者では0.15U/kgが必要なことがある",
+      "冠動脈疾患には禁忌 → GHRP-2試験やグルカゴン試験で代替",
+      "各測定値の頂値は30〜60分で出現することが多い",
+    ],
+    reportPhrase: "インスリン低血糖試験で血糖底値 ___mg/dL（有効刺激【あり／なし】）、GH頂値 ___ng/mL、ACTH頂値 ___pg/mL、cortisol頂値 ___μg/dLと【正常反応／分泌不全（GH/ACTH/cortisol）】でした。",
+    hormoneFlow: {
+      axisKey: "HPA", highlightTarget: "pituitary",
+      mechanismLabel: "低血糖ストレスで視床下部CRH↑ →\n下垂体ACTH・GH分泌能を評価",
+    },
+  },
+
+  // ═══════════════════════════════════════════════════════════
+  // DDAVP負荷試験（Cushing病鑑別用）
+  // ═══════════════════════════════════════════════════════════
+  {
+    id: "ddavp-cushing",
+    name: "DDAVP負荷試験（Cushing病鑑別）",
+    tagline: "Cushing病の下垂体腺腫はDDAVPに反応してACTHを分泌する",
+    essence: "DDAVP刺激に対するACTH分泌反応（健常者は無反応）",
+    color: "purple",
+    category: "副腎・HPA軸",
+    status: "available",
+    what: "デスモプレシン（DDAVP）を投与してACTH分泌を評価する。正常下垂体のACTH分泌細胞はV3（V1b）受容体をほとんど発現しないため無反応だが、Cushing病の腺腫細胞はV3受容体を過剰発現しておりACTHが上昇する。CRH試験と併用してCushing病の鑑別に用いる。",
+    indications: [
+      "Cushing症候群の原因鑑別（下垂体性 vs 異所性ACTH産生腫瘍）",
+      "CRH試験と併用したCushing病の確認",
+      "術後のCushing病再発モニタリング",
+    ],
+    preparations: [
+      "絶食不要（ただし安静30分以上の臥位安静後に開始）",
+      "基礎ACTH・cortisolの確認",
+      "水分制限は不要（尿崩症用DDPVPと異なり少量投与）",
+    ],
+    timeline: [
+      { time: "0分",   action: "採血（ACTH・cortisol）", isKey: true },
+      { time: "0分",   action: "DDAVP 4μg IV（緩徐に投与）", isKey: true },
+      { time: "15分",  action: "採血（ACTH・cortisol）", isKey: true },
+      { time: "30分",  action: "採血（ACTH・cortisol）", isKey: true },
+      { time: "60分",  action: "採血（ACTH・cortisol）", isKey: true },
+      { time: "90分",  action: "採血（ACTH・cortisol）", isKey: false },
+      { time: "120分", action: "採血（ACTH・cortisol）", isKey: true },
+    ],
+    judgments: [
+      {
+        parameter: "ACTH頂値（前値比）",
+        unit: "倍", threshold: "1.5", isNormalAbove: false,
+        normalLabel: "無反応（健常者パターン）",
+        abnormalLabel: "ACTH上昇 → Cushing病を示唆",
+        note: "健常者は無反応。Cushing病ではACTHが前値の1.5倍以上に上昇。異所性ACTH産生腫瘍では通常無反応",
+      },
+    ],
+    normalInterpretation: "DDAVPに対してACTH無反応 → 正常、または異所性ACTH産生腫瘍の可能性。",
+    abnormalInterpretation: "ACTHが前値の1.5倍以上に上昇 → Cushing病（下垂体腺腫のV3受容体発現）を強く示唆。CRH試験でも反応があれば確定的。",
+    cautions: [
+      "顔面紅潮・軽度の血圧低下が出現することがある",
+      "冠動脈疾患では慎重投与（血管収縮作用）",
+      "水中毒のリスクは低いが、大量飲水は避ける",
+    ],
+    contraindications: [
+      "不安定狭心症・重症冠動脈疾患",
+      "低Na血症（<130mEq/L）",
+    ],
+    pitfalls: [
+      "異所性ACTH産生腫瘍でもまれにDDAVPに反応する → CRH試験・IPSSと総合判断",
+      "術後再発モニタリングでは前値比の変化に注目",
+      "CRH試験との組み合わせが鑑別精度を高める",
+    ],
+    reportPhrase: "DDAVP負荷試験でACTH前値 ___pg/mL → 頂値 ___pg/mL（前値比 ___倍）と【無反応（健常者パターン）／反応あり（Cushing病示唆）】でした。",
+    hormoneFlow: {
+      axisKey: "HPA", highlightTarget: "pituitary",
+      mechanismLabel: "DDAVPがV3受容体を刺激 →\nCushing病の腺腫はACTH分泌↑、健常者は無反応",
+    },
+  },
+
+  // ═══════════════════════════════════════════════════════════
+  // 75gOGTT（先端巨大症用・GH抑制試験）
+  // ═══════════════════════════════════════════════════════════
+  {
+    id: "ogtt-gh",
+    name: "75gOGTT（GH抑制試験：先端巨大症）",
+    tagline: "経口ブドウ糖負荷でGHが抑制されなければ先端巨大症",
+    essence: "ブドウ糖負荷後のGH底値（正常は≤0.4ng/mL）",
+    color: "emerald",
+    category: "成長ホルモン軸",
+    status: "available",
+    what: "75gブドウ糖を経口投与し、GHの抑制を評価する。正常では高血糖によりGH分泌が抑制されるが、先端巨大症ではGH産生腺腫が自律的に分泌するため抑制されない。先端巨大症の確定診断および術後の治療効果判定に必須の検査。",
+    indications: [
+      "先端巨大症の確定診断（IGF-1高値の精査）",
+      "先端巨大症の術後治療効果判定",
+      "GH産生腺腫の活動性評価",
+    ],
+    preparations: [
+      "前日21時以降絶食（10時間以上）",
+      "早朝安静時に実施",
+      "GH・IGF-1基礎値の確認",
+    ],
+    timeline: [
+      { time: "0分",   action: "採血（GH・Glucose・IRI）", isKey: true },
+      { time: "0分",   action: "75gブドウ糖液 経口投与", isKey: true },
+      { time: "30分",  action: "採血（GH・Glucose）", isKey: true },
+      { time: "60分",  action: "採血（GH・Glucose）", isKey: true },
+      { time: "90分",  action: "採血（GH・Glucose）", isKey: false },
+      { time: "120分", action: "採血（GH・Glucose）", isKey: true },
+    ],
+    judgments: [
+      {
+        parameter: "GH底値（全採血点の最低値）",
+        unit: "ng/mL", threshold: "0.4", isNormalAbove: false,
+        normalLabel: "GH正常抑制（先端巨大症は否定的）",
+        abnormalLabel: "GH抑制不十分 → 先端巨大症",
+        note: "底値≤0.4ng/mL → 正常抑制。底値>0.4ng/mL → 先端巨大症。旧基準（≤1.0ng/mL）を用いる施設もあり。GHは30〜60分で底値となる",
+      },
+    ],
+    normalInterpretation: "ブドウ糖負荷によりGHが0.4ng/mL以下に抑制 → 正常なGH分泌調節。先端巨大症は否定的。",
+    abnormalInterpretation: "GH底値>0.4ng/mL → GH産生腺腫の自律的分泌（先端巨大症）。術後にGH底値>1.0ng/mLの場合は治療不十分を示唆。IGF-1と併せて判定。",
+    cautions: [
+      "糖尿病患者では高血糖が遷延する → 血糖モニタリングを継続",
+      "GHは拍動性分泌のため、単回採血では評価不可 → 必ず経時的採血",
+      "妊娠中は胎盤性GHの影響で偽陽性あり",
+    ],
+    contraindications: [],
+    pitfalls: [
+      "GH底値のカットオフは測定法により異なる（ECLIA法：0.4ng/mL、旧RIA法：1.0ng/mL）",
+      "先端巨大症でもOGTTでGHが奇異性上昇（paradoxical rise）することがある",
+      "糖尿病・肝硬変・腎不全ではGH基礎値が高く偽陽性の可能性",
+      "術後の治療効果判定では IGF-1正常化 + GH底値≤1.0ng/mL が寛解基準",
+    ],
+    reportPhrase: "75gOGTT（GH抑制試験）でGH底値 ___ng/mL（___分時）と【正常抑制（≤0.4）／抑制不十分（先端巨大症）】でした。",
+    hormoneFlow: {
+      axisKey: "GH", highlightTarget: "pituitary",
+      mechanismLabel: "ブドウ糖負荷 → 正常ならGH抑制\n先端巨大症では腺腫が自律的にGH分泌",
+    },
+  },
 ];
