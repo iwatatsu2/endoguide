@@ -386,14 +386,14 @@ export const endocrineTests: EndocrineTest[] = [
       "副腎偶発腫瘍でACTH高値の精査",
     ],
     preparations: [
-      "2日法（標準）: デキサメタゾン 0.5mg ×6時間毎 ×2日間（計4mg）投与後、コルチゾール採血",
-      "一夜法: 前日23時にDEX 8mgを内服 → 翌朝8時採血（簡便だが偽陽性あり）",
+      "一夜法（標準）: 前日23時にDEX 8mgを内服 → 翌朝8時に採血（ACTH・コルチゾール）",
+      "※歴史的プロトコル: Liddle高用量2日法（DEX 2mg ×6時間毎 ×2日間＝計16mg）も存在するが、現在はほぼ使用されない",
       "ベースラインのコルチゾール・ACTH・UFC（24h蓄尿）を確認",
       "CYP3A4誘導薬は中止または影響を考慮する",
     ],
     timeline: [
-      { time: "Day 1–2", action: "DEX 0.5mg ×6時間毎 ×2日間を内服（2日法）", isKey: true, note: "一夜法の場合: Day 1の23時にDEX 8mg単回内服" },
-      { time: "Day 3 朝", action: "採血（コルチゾール・ACTH）", isKey: true },
+      { time: "前日 23時", action: "DEX 8mgを内服", isKey: true },
+      { time: "翌朝 8時", action: "採血（コルチゾール・ACTH）", isKey: true },
       { time: "必要時", action: "UFC（24h蓄尿）をDEX前後で比較", note: "感度・特異度向上のため" },
     ],
     judgments: [
@@ -411,7 +411,7 @@ export const endocrineTests: EndocrineTest[] = [
       "1mg DSTで陽性確認済みの患者に実施する（スクリーニングには使わない）",
       "感度・特異度ともに完全ではない → IPSS（侵襲的）が確定診断の標準",
       "抑制ありでも異所性ACTHが完全に除外できない（偽陽性）",
-      "2日法の方が一夜法より再現性が高い",
+      "現在は一夜法（8mg単回）が標準。Liddle高用量2日法は歴史的プロトコル",
     ],
     contraindications: [],
     pitfalls: [
@@ -1048,7 +1048,7 @@ export const endocrineTests: EndocrineTest[] = [
     judgments: [
       {
         parameter: "LH最大増加倍率（ベースラインから）",
-        unit: "倍", threshold: "3", isNormalAbove: true,
+        unit: "倍", threshold: "5", isNormalAbove: true,
         normalLabel: "下垂体は正常",
         abnormalLabel: "下垂体性機能低下疑い",
         note: "性別・年齢・月経周期で基準値が異なる。FSHは変化が乏しいことが多い",
