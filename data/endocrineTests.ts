@@ -930,7 +930,7 @@ export const endocrineTests: EndocrineTest[] = [
         unit: "ng/mL", threshold: "3", isNormalAbove: true,
         normalLabel: "GH分泌正常",
         abnormalLabel: "GH分泌不全疑い",
-        note: "BMIにより閾値を調整（施設基準による）。BMI高値では閾値を下げる",
+        note: "重症GH分泌不全：頂値≤1.8ng/mL。BMIにより閾値を調整（施設基準による）。BMI高値では閾値を下げる",
       },
     ],
     normalInterpretation: "アルギニン刺激に反応してGHが十分上昇 → 下垂体のGH分泌能は正常。",
