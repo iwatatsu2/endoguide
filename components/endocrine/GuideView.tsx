@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 
-type GuideTab = "ホルモン軸" | "副腎腫瘤" | "クッシング" | "PA" | "褐色細胞腫" | "遺伝性MEN";
+type GuideTab = "ホルモン軸" | "副腎腫瘤" | "クッシング" | "PA" | "褐色細胞腫" | "遺伝性MEN" | "低Na鑑別";
 
 export default function GuideView() {
   const [tab, setTab] = useState<GuideTab>("ホルモン軸");
@@ -10,7 +10,7 @@ export default function GuideView() {
     <div className="space-y-4">
       {/* サブタブ */}
       <div className="flex gap-2 overflow-x-auto pb-1">
-        {(["ホルモン軸", "副腎腫瘤", "クッシング", "PA", "褐色細胞腫", "遺伝性MEN"] as GuideTab[]).map(t => (
+        {(["ホルモン軸", "副腎腫瘤", "クッシング", "PA", "褐色細胞腫", "遺伝性MEN", "低Na鑑別"] as GuideTab[]).map(t => (
           <button
             key={t}
             onClick={() => setTab(t)}
@@ -532,6 +532,171 @@ export default function GuideView() {
               <span className="text-gray-400">膵NET</span>
               <span className="text-gray-300 text-center">30–70%</span>
               <span className="text-gray-500 text-center">なし</span>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ── 低Na鑑別 ── */}
+      {tab === "低Na鑑別" && (
+        <div className="space-y-3">
+          <p className="text-xs text-gray-500 px-1">虎の門病院 低ナトリウム血症 鑑別フローチャート</p>
+
+          {/* Step 1: 低Na発見 */}
+          <FlowBox color="blue">血清Na &lt; 135 mEq/L</FlowBox>
+          <FlowArrow />
+
+          {/* Step 2: 血漿浸透圧 */}
+          <div className="rounded-xl border border-gray-700 bg-gray-800/40 p-3">
+            <p className="text-xs font-bold text-white mb-2">Step 1：血漿浸透圧を確認</p>
+            <div className="grid grid-cols-3 gap-2">
+              <div className="rounded-lg bg-gray-900 p-2 text-xs space-y-1">
+                <p className="font-bold text-yellow-300">&lt; 280 mOsm/kg</p>
+                <p className="text-gray-400">低張性（真の低Na）</p>
+                <p className="text-green-300 font-semibold">→ Step 2へ</p>
+              </div>
+              <div className="rounded-lg bg-gray-900 p-2 text-xs space-y-1">
+                <p className="font-bold text-gray-300">280–295</p>
+                <p className="text-gray-400">等張性</p>
+                <p className="text-gray-300">偽性低Na</p>
+                <p className="text-gray-500">高脂血症・高蛋白</p>
+              </div>
+              <div className="rounded-lg bg-gray-900 p-2 text-xs space-y-1">
+                <p className="font-bold text-gray-300">&gt; 295</p>
+                <p className="text-gray-400">高張性</p>
+                <p className="text-gray-300">移行性低Na</p>
+                <p className="text-gray-500">高血糖・マンニトール</p>
+              </div>
+            </div>
+          </div>
+
+          <FlowArrow label="低張性（< 280）" />
+
+          {/* Step 3: 細胞外液量 */}
+          <div className="rounded-xl border border-gray-700 bg-gray-800/40 p-3">
+            <p className="text-xs font-bold text-white mb-2">Step 2：細胞外液量（体液量）の評価</p>
+            <p className="text-xs text-gray-500 mb-2">身体所見（浮腫・脱水徴候・体重変化）で判断</p>
+            <div className="grid grid-cols-3 gap-2">
+              <div className="rounded-lg bg-red-950/30 border border-red-700/40 p-2 text-xs space-y-1">
+                <p className="font-bold text-red-300">減少（脱水）</p>
+                <p className="text-gray-400">皮膚ツルゴール↓</p>
+                <p className="text-gray-400">口腔乾燥・頻脈</p>
+                <p className="text-gray-400">起立性低血圧</p>
+              </div>
+              <div className="rounded-lg bg-cyan-950/30 border border-cyan-700/40 p-2 text-xs space-y-1">
+                <p className="font-bold text-cyan-300">正常</p>
+                <p className="text-gray-400">浮腫なし</p>
+                <p className="text-gray-400">脱水徴候なし</p>
+              </div>
+              <div className="rounded-lg bg-blue-950/30 border border-blue-700/40 p-2 text-xs space-y-1">
+                <p className="font-bold text-blue-300">増加（溢水）</p>
+                <p className="text-gray-400">浮腫あり</p>
+                <p className="text-gray-400">腹水・胸水</p>
+              </div>
+            </div>
+          </div>
+
+          <FlowArrow />
+
+          {/* Step 4: 尿中Na */}
+          <div className="rounded-xl border border-gray-700 bg-gray-800/40 p-3">
+            <p className="text-xs font-bold text-white mb-2">Step 3：尿中Na で腎性 vs 腎外性を鑑別</p>
+            <div className="grid grid-cols-3 gap-2">
+
+              {/* 細胞外液 減少 */}
+              <div className="space-y-2 text-xs">
+                <p className="text-red-300 font-bold text-center">細胞外液↓</p>
+                <div className="rounded-lg bg-gray-900 p-2 space-y-1">
+                  <p className="text-yellow-300 font-semibold">尿Na &lt; 20</p>
+                  <p className="text-gray-300">腎外性Na喪失</p>
+                  <p className="text-gray-500">嘔吐・下痢</p>
+                  <p className="text-gray-500">第3腔貯留</p>
+                  <p className="text-gray-500">熱傷</p>
+                </div>
+                <div className="rounded-lg bg-gray-900 p-2 space-y-1">
+                  <p className="text-yellow-300 font-semibold">尿Na &gt; 20</p>
+                  <p className="text-gray-300">腎性Na喪失</p>
+                  <p className="text-gray-500">利尿薬</p>
+                  <p className="text-gray-500">副腎不全</p>
+                  <p className="text-gray-500">塩類喪失性腎症</p>
+                  <p className="text-gray-500">CSWS</p>
+                </div>
+              </div>
+
+              {/* 細胞外液 正常 */}
+              <div className="space-y-2 text-xs">
+                <p className="text-cyan-300 font-bold text-center">細胞外液 正常</p>
+                <div className="rounded-lg bg-gray-900 p-2 space-y-1">
+                  <p className="text-yellow-300 font-semibold">尿Na &gt; 20（通常）</p>
+                  <p className="text-cyan-300 font-bold">SIADH</p>
+                  <p className="text-gray-500">甲状腺機能低下症</p>
+                  <p className="text-gray-500">副腎不全（糖質CC）</p>
+                  <p className="text-gray-500">水中毒（心因性多飲）</p>
+                  <p className="text-gray-500">Reset osmostat</p>
+                </div>
+              </div>
+
+              {/* 細胞外液 増加 */}
+              <div className="space-y-2 text-xs">
+                <p className="text-blue-300 font-bold text-center">細胞外液↑</p>
+                <div className="rounded-lg bg-gray-900 p-2 space-y-1">
+                  <p className="text-yellow-300 font-semibold">尿Na &lt; 20</p>
+                  <p className="text-gray-300">希釈性低Na</p>
+                  <p className="text-gray-500">心不全</p>
+                  <p className="text-gray-500">肝硬変</p>
+                  <p className="text-gray-500">ネフローゼ</p>
+                </div>
+                <div className="rounded-lg bg-gray-900 p-2 space-y-1">
+                  <p className="text-yellow-300 font-semibold">尿Na &gt; 20</p>
+                  <p className="text-gray-500">腎不全</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <FlowArrow />
+
+          {/* SIADH診断基準 */}
+          <div className="rounded-xl border border-cyan-700/50 bg-cyan-950/20 p-3 text-xs space-y-2">
+            <p className="font-bold text-cyan-300">SIADH 診断基準（主要項目）</p>
+            <div className="space-y-1 text-gray-300">
+              <p>① 低張性低Na血症（血漿浸透圧 &lt; 280）</p>
+              <p>② 尿浸透圧 &gt; 100 mOsm/kg（尿が希釈されていない）</p>
+              <p>③ 細胞外液量は正常〜軽度増加（浮腫なし）</p>
+              <p>④ 尿中Na &gt; 20 mEq/L（腎からのNa排泄亢進）</p>
+              <p>⑤ 甲状腺・副腎機能が正常</p>
+              <p>⑥ 利尿薬使用なし</p>
+            </div>
+            <div className="mt-2 pt-2 border-t border-cyan-700/30 space-y-1 text-gray-400">
+              <p className="text-cyan-400 font-semibold">主な原因</p>
+              <p>肺疾患（肺炎・肺癌 特に小細胞癌）</p>
+              <p>中枢神経疾患（髄膜炎・脳出血・外傷）</p>
+              <p>薬剤性（SSRI・カルバマゼピン・シクロホスファミド）</p>
+              <p>異所性ADH産生腫瘍</p>
+            </div>
+          </div>
+
+          {/* 補正の注意 */}
+          <div className="rounded-xl bg-yellow-950/30 border border-yellow-700/50 p-3 text-xs space-y-2">
+            <p className="font-bold text-yellow-400">⚠️ Na補正の注意点（ODS予防）</p>
+            <div className="space-y-1 text-gray-300">
+              <p>補正速度：<span className="text-yellow-300 font-bold">24時間で 8 mEq/L 以内</span></p>
+              <p>高リスク群（慢性低Na・低栄養・アルコール・低K）：<span className="text-yellow-300 font-bold">24時間で 6 mEq/L 以内</span></p>
+              <p>急性（48時間以内発症）かつ症状あり → 3% NaCl で速やかに補正可</p>
+            </div>
+            <div className="mt-1 pt-1 border-t border-yellow-700/30 text-gray-400">
+              <p>過補正時 → 5%ブドウ糖液やDDAVPで再低下を図る</p>
+            </div>
+          </div>
+
+          {/* 鑑別の要点 */}
+          <div className="rounded-xl bg-gray-800/50 border border-gray-700 p-3 text-xs space-y-1">
+            <p className="font-bold text-white mb-1">鑑別のまとめ</p>
+            <div className="space-y-1 text-gray-300">
+              <p>① 血漿浸透圧で「真の低Na」か確認</p>
+              <p>② 体液量評価で 3群（減少・正常・増加）に分類</p>
+              <p>③ 尿中Naで 腎性 vs 腎外性 を鑑別</p>
+              <p>④ 細胞外液正常 → SIADH・甲状腺・副腎を精査</p>
             </div>
           </div>
         </div>
