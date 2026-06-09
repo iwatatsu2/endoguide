@@ -88,7 +88,7 @@ export default function TestDetail({ test }: { test: EndocrineTest }) {
       </div>
 
       {/* ── コンテンツ ── */}
-      <div className="px-4 py-4 space-y-3 max-w-lg mx-auto pb-16">
+      <div className="px-4 py-4 space-y-3 max-w-lg md:max-w-3xl mx-auto pb-16">
 
         {/* ① 概要 + ホルモン流れ図 */}
         <Card id="sec-what">

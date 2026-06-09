@@ -46,7 +46,7 @@ export default function EndocrinePage() {
 
       {/* ── ヘッダー ── */}
       <div className="sticky top-0 z-10 bg-gray-950 border-b border-gray-800 px-4 pt-10 pb-4">
-        <div className="max-w-lg mx-auto">
+        <div className="max-w-lg md:max-w-3xl mx-auto">
           <div className="flex items-end justify-between">
             <div>
               <p className="text-xs font-bold tracking-[0.2em] text-blue-400 uppercase mb-1">
@@ -70,7 +70,7 @@ export default function EndocrinePage() {
       </div>
 
       {/* ── タブ切替（負荷試験 / 基礎知識・鑑別） ── */}
-      <div className="max-w-lg mx-auto pt-4">
+      <div className="max-w-lg md:max-w-3xl mx-auto pt-4">
         <PageTabs testList={
           <div className="space-y-2">
             {CATEGORY_ORDER.map((category) => {
@@ -107,7 +107,7 @@ export default function EndocrinePage() {
                 />
                 <div className="text-center">
                   <p className="text-base font-black text-white">Dr.いわたつ</p>
-                  <p className="text-xs text-gray-400 mt-0.5">糖尿病・内分泌専門医</p>
+                  <p className="text-xs text-gray-400 mt-0.5">糖尿病・内分泌専門医・指導医</p>
                 </div>
               </div>
               <div className="space-y-3">
