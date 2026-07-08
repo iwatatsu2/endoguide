@@ -111,7 +111,7 @@ export default function EndocrinePage() {
                 </div>
               </div>
               <div className="space-y-3">
-                <a href="https://driwatatsu.readdy.co/" target="_blank" rel="noopener noreferrer"
+                <a href="https://driwatatsu-hp.vercel.app/" target="_blank" rel="noopener noreferrer"
                   className="flex items-center gap-3 rounded-xl bg-gray-800 px-4 py-3 hover:bg-gray-700 transition-colors">
                   <span className="text-lg">🌐</span>
                   <div>
@@ -127,7 +127,7 @@ export default function EndocrinePage() {
                     <p className="text-xs text-gray-500">@dr.iwatatsu</p>
                   </div>
                 </a>
-                <a href="https://driwatatsu.readdy.co/corporate#contact-form" target="_blank" rel="noopener noreferrer"
+                <a href="https://driwatatsu-hp.vercel.app/corporate#contact-form" target="_blank" rel="noopener noreferrer"
                   className="flex items-center gap-3 rounded-xl bg-blue-500/10 border border-blue-500/30 px-4 py-3 hover:bg-blue-500/20 transition-colors">
                   <span className="text-lg">📚</span>
                   <div>
