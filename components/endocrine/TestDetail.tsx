@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRef } from "react";
 import { EndocrineTest, ClinicalNote } from "@/data/endocrineTests";
 import HormoneFlow from "./HormoneFlow";
+import { TRAINING_CASES } from "@/lib/trainingCases";
 
 // ─── カラーマップ ─────────────────────────────────────
 const C: Record<string, { header: string; tag: string; tagText: string }> = {
@@ -308,6 +309,23 @@ export default function TestDetail({ test }: { test: EndocrineTest }) {
             </p>
           </div>
         </Card>
+
+        {/* 症例トレーニングへの入口（調べる→判断を練習する）。対応する症例がある検査だけ */}
+        {TRAINING_CASES[test.id] && (
+          <a
+            href={TRAINING_CASES[test.id].url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="block bg-white rounded-2xl p-4 shadow-sm border border-gray-200 hover:border-blue-300 transition-colors"
+          >
+            <p className="text-sm font-bold text-gray-800">この検査が出てくる症例で練習する</p>
+            <p className="mt-1 text-xs text-gray-700 leading-relaxed">{TRAINING_CASES[test.id].title}</p>
+            <p className="mt-1.5 text-xs text-gray-500 leading-relaxed">
+              {TRAINING_CASES[test.id].app === "endo" ? "Endo" : "DM"} Compass Training ・{" "}
+              {TRAINING_CASES[test.id].free ? "最後まで無料で体験できます" : "最初の設問まで無料で体験できます"} →
+            </p>
+          </a>
+        )}
 
         <p className="text-xs text-gray-400 text-center px-4">
           判定基準は施設により異なります。必ず自施設のプロトコルに従ってください。
