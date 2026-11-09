@@ -1,16 +1,16 @@
 "use client";
 import { useState } from "react";
 
-type Disease = "先端巨大症" | "プロラクチノーマ" | "クッシング病" | "前葉機能低下症" | "AVP欠乏症" | "TSH産生腫瘍" | "偶発腫・卒中";
+type Disease = "先端巨大症" | "高PRL血症" | "クッシング病" | "前葉機能低下症" | "尿崩症" | "TSH産生腫瘍" | "偶発腫・卒中";
 
-const DISEASES: Disease[] = ["先端巨大症", "プロラクチノーマ", "クッシング病", "前葉機能低下症", "AVP欠乏症", "TSH産生腫瘍", "偶発腫・卒中"];
+const DISEASES: Disease[] = ["先端巨大症", "高PRL血症", "クッシング病", "前葉機能低下症", "尿崩症", "TSH産生腫瘍", "偶発腫・卒中"];
 
 export default function PituitaryGuide() {
   const [d, setD] = useState<Disease>("先端巨大症");
 
   return (
     <div className="space-y-3">
-      <p className="text-xs text-gray-500 px-1">下垂体疾患の診断基準（厚労省 間脳下垂体機能障害調査研究班 診療ガイドライン2023年版 準拠・要点）</p>
+      <p className="text-xs text-gray-500 px-1">下垂体疾患の診断基準（厚労省 間脳下垂体機能障害調査研究班 診療ガイドライン2023年版の「診断の手引き」に準拠・要点）</p>
 
       <div className="flex flex-wrap gap-1.5">
         {DISEASES.map(x => (
@@ -30,60 +30,64 @@ export default function PituitaryGuide() {
       {d === "先端巨大症" && (
         <div className="space-y-3">
           <Block tone="sky" title="Ⅰ 主症候">
-            <p>① 手足の容積の増大（指輪・靴のサイズが変わる）</p>
-            <p>② 先端巨大症様顔貌（眉弓部の膨隆・鼻や口唇の肥大・下顎の突出）</p>
+            <p>① 手足の容積の増大</p>
+            <p>② 先端巨大症様顔貌（眉弓部の膨隆・鼻や口唇の肥大・下顎の突出など）</p>
             <p>③ 巨大舌</p>
           </Block>
           <Block tone="blue" title="Ⅱ 検査所見">
-            <p>① GH分泌の過剰：<Em>75gOGTTでGH底値が0.4 ng/mL未満に抑制されない</Em></p>
-            <p>② 血中IGF-1高値（年齢・性別基準値で判定／SDスコア &gt;+2.0）</p>
-            <p>③ MRI（またはCT）で下垂体腺腫を認める</p>
+            <p>① GH分泌の過剰：<Em>75gOGTTでGHが正常域（底値 0.4 ng/mL未満）まで抑制されない</Em></p>
+            <p>② 血中IGF-1の高値（健常者の年齢・性別基準値で判定）</p>
+            <p>③ MRIまたはCTで下垂体腫瘍（腺腫）を認める</p>
+            <p className="text-gray-500">GH値はキットごとの補正式（成長科学協会）で補正して判定</p>
           </Block>
           <Block tone="gray" title="Ⅲ 副症候・参考所見">
-            <p>発汗過多・頭痛・視野障害・月経異常・睡眠時無呼吸・耐糖能異常・高血圧・咬合不全・頭蓋骨/手足X線の異常</p>
+            <p>発汗過多・頭痛・視力/視野障害・月経異常・睡眠時無呼吸・耐糖能異常・高血圧・不正咬合・変形性関節症・手根管症候群・頭蓋骨/手足X線の異常（heel pad 22mm以上など）</p>
           </Block>
           <Verdict>
-            <p><Em>確実例</Em>：Ⅰのいずれか ＋ Ⅱの①〜③をすべて満たす</p>
+            <p><Em>確実例</Em>：Ⅰのいずれか ＋ Ⅱのすべて</p>
+            <p className="text-gray-400 mt-1">OGTTでGHが正常域に抑制される・症候が軽微でも、IGF-1高値なら画像検査を行い総合的に診断（原典の附記）</p>
           </Verdict>
-          <Point title="実臨床のポイント">
-            <p>一次検査はIGF-1（GHは拍動性分泌で単回測定は当てにならない）</p>
-            <p>2024年国際コンセンサス：典型徴候＋IGF-1が基準上限の約1.3倍超ならOGTTは必須でない。境界域で確認に使う</p>
-            <p>IGF-1が動く状況：コントロール不良の糖尿病・肝/腎不全・低栄養・甲状腺機能低下・経口エストロゲン・妊娠・思春期</p>
-            <p>OGTTでGHが奇異性に上昇する例あり</p>
+          <Point title="判定がずれる状況（原典の注）">
+            <p><Em>GHが抑制されにくい（偽陽性）</Em>：糖尿病・肝疾患・腎疾患・甲状腺機能亢進症・褐色細胞腫・低栄養・思春期/青年期</p>
+            <p><Em>IGF-1が高値を示さない（偽陰性）</Em>：栄養障害・肝疾患・腎疾患・甲状腺機能低下症・コントロール不良の糖尿病</p>
+            <p>妊娠後期はhPLの影響でIGF-1が高値になりうる</p>
+            <p className="text-gray-400">（参考・原典外）2024年国際コンセンサス：典型徴候＋IGF-1が基準上限の約1.3倍超ならOGTTは必須でない</p>
           </Point>
-          <Block tone="green" title="治療と寛解の目安">
-            <p>第一選択：経蝶形骨洞手術 → 残存時はソマトスタチンアナログ・ペグビソマント等</p>
-            <p>術後の寛解：OGTTでGH底値 &lt;0.4 ng/mL ＋ IGF-1が年齢・性別基準内 ＋ 臨床的活動性なし</p>
-            <p>薬物治療中は治療法ごとに判定：ソマトスタチンアナログ中はOGTTを使わない／<Em>ペグビソマント中はGHで効果判定しない</Em>（IGF-1で判定）</p>
+          <Block tone="green" title="治療効果の判定（原典）">
+            <p><span className="text-green-300 font-semibold">手術の寛解</span>：IGF-1が年齢・性別基準範囲内 ＋ OGTTでGH底値 &lt;0.4 ng/mL ＋ 臨床的活動性なし（IGF-1は術後3〜6か月で判定）</p>
+            <p><span className="text-green-300 font-semibold">薬物治療のコントロール良好</span>：IGF-1が基準範囲内 ＋ ランダムGH &lt;1 ng/mL ＋ 臨床的活動性なし</p>
+            <p>ソマトスタチンアナログ治療中はOGTTを使わない／<Em>ペグビソマント中はGHが治療指標にならない</Em>（IGF-1で判定）</p>
+            <p>第一選択は手術（経蝶形骨洞手術）</p>
           </Block>
         </div>
       )}
 
-      {/* ── プロラクチノーマ ── */}
-      {d === "プロラクチノーマ" && (
+      {/* ── 高PRL血症 ── */}
+      {d === "高PRL血症" && (
         <div className="space-y-3">
           <Block tone="pink" title="Ⅰ 主症候">
-            <p><span className="text-pink-300 font-semibold">女性</span>：月経異常（無月経・希発月経）・乳汁漏出・不妊</p>
-            <p><span className="text-pink-300 font-semibold">男性</span>：性欲低下・勃起障害・女性化乳房・乳汁漏出</p>
-            <p><span className="text-pink-300 font-semibold">共通</span>：頭痛・視野障害（マクロ腺腫）</p>
+            <p><span className="text-pink-300 font-semibold">女性</span>：月経不順・無月経・不妊・乳汁分泌</p>
+            <p><span className="text-pink-300 font-semibold">男性</span>：性欲低下・インポテンス・女性化乳房・乳汁分泌</p>
+            <p><span className="text-pink-300 font-semibold">共通</span>：頭痛・視力視野障害（器質的視床下部・下垂体病変による）</p>
           </Block>
           <Block tone="blue" title="Ⅱ 検査所見">
-            <p>① 血中PRLの高値（安静時・複数回で確認）</p>
-            <p>② MRIで下垂体腺腫を認める</p>
-          </Block>
-          <Block tone="yellow" title="Ⅲ 必ず除外する高PRL血症の原因">
-            <p><Em>薬剤性</Em>：スルピリド・メトクロプラミド・ドンペリドン・抗精神病薬・三環系抗うつ薬・H2遮断薬など</p>
-            <p>原発性甲状腺機能低下症（TRH↑）／妊娠・授乳／腎不全／胸壁刺激（帯状疱疹・手術）</p>
-            <p>マクロプロラクチン血症（症状が合わない時はPEG処理で確認）</p>
-            <p>視床下部・下垂体茎病変（stalk effect：非機能性腺腫でも上がる）</p>
+            <p>血中PRLの上昇（睡眠・ストレス・性交・運動で上がるため<Em>複数回測定し、いずれも施設基準値以上</Em>を確認）</p>
           </Block>
           <Verdict>
-            <p><Em>確実例</Em>：Ⅰのいずれか ＋ Ⅱの①② ＋ Ⅲの除外</p>
+            <p><Em>高PRL血症 確実例</Em>：Ⅰのいずれか ＋ Ⅱ</p>
+            <p className="text-gray-400 mt-1">→ 次に原因を鑑別（下の順番で）</p>
           </Verdict>
-          <Point title="数字の目安">
-            <p>PRL &gt;200 ng/mL → プロラクチノーマの可能性が高い</p>
-            <p>マクロ腺腫なのにPRLが軽度高値 → stalk effect か <Em>フック効果</Em>（希釈して再測定）</p>
-            <p>治療：カベルゴリン第一選択（腫瘍縮小・視野改善も期待）</p>
+          <Block tone="yellow" title="Ⅲ 原因の鑑別（この順番）">
+            <p>1. <Em>薬剤</Em>（腫瘍以外で最多）：ドパミン受容体拮抗薬（メトクロプラミド等）・抗精神病薬（スルピリド・リスペリドン・オランザピン等）・抗うつ薬（三環系・SSRI）・α-メチルドパ・ベラパミル・H2遮断薬・エストロゲン製剤（経口避妊薬）・麻薬 → 可能なら2週間休薬して再検（抗精神病薬は処方医と相談）</p>
+            <p>2. 原発性甲状腺機能低下症（FT4↓・TSH↑）</p>
+            <p>3. 1・2を除外してからトルコ鞍部のMRI/CT</p>
+            <p className="pl-3">異常あり：プロラクチノーマ（腫瘍の実質容積とPRL値がおおむね相関）／GH-PRL同時産生腫瘍／視床下部・下垂体茎病変（非機能性腫瘍・頭蓋咽頭腫・ラトケ嚢胞・下垂体炎など）</p>
+            <p className="pl-3">異常なし：マクロプロラクチン血症・慢性腎不全・胸壁疾患 → 該当なければ視床下部の機能性異常</p>
+          </Block>
+          <Point title="測定の落とし穴">
+            <p><Em>マクロプロラクチン血症</Em>：高PRL血症の15〜25%。症候はない。PEG法・ゲルろ過で証明</p>
+            <p><Em>フック効果</Em>：マクロプロラクチノーマで見かけ上PRLが低く出る（大きい腫瘍なのにPRLが軽度高値なら希釈して再測定）</p>
+            <p>治療：プロラクチノーマは薬物療法（カベルゴリン 週1回0.25mgから漸増・上限1mg/回）が基本</p>
           </Point>
         </div>
       )}
@@ -91,34 +95,35 @@ export default function PituitaryGuide() {
       {/* ── クッシング病 ── */}
       {d === "クッシング病" && (
         <div className="space-y-3">
-          <Block tone="orange" title="Ⅰ 主症候">
-            <p><span className="text-orange-300 font-semibold">特異的</span>：満月様顔貌・中心性肥満/水牛様脂肪沈着・赤紫色皮膚線条（幅1cm以上）・皮膚の菲薄化と皮下溢血・近位筋の筋力低下・小児の肥満を伴う成長遅延</p>
-            <p><span className="text-orange-300 font-semibold">非特異的</span>：高血圧・月経異常・ざ瘡・多毛・浮腫・耐糖能異常・骨粗鬆症・色素沈着・精神症状</p>
+          <Block tone="orange" title="Ⅰ 主症候（一つ以上）">
+            <p><span className="text-orange-300 font-semibold">特異的</span>：満月様顔貌・中心性肥満または水牛様脂肪沈着・赤紫色皮膚線条（幅1cm以上）・皮膚の菲薄化と皮下溢血・近位筋萎縮による筋力低下・小児の肥満を伴う成長遅延</p>
+            <p><span className="text-orange-300 font-semibold">非特異的</span>：高血圧・月経異常・座瘡・多毛・浮腫・耐糖能異常・骨粗鬆症・色素沈着・精神障害</p>
           </Block>
-          <Block tone="blue" title="Ⅱ 検査所見（コルチゾール過剰＋ACTH非抑制）">
-            <p>① 血中ACTHとコルチゾールを同時測定し、ともに正常〜高値（ACTHが抑制されない）</p>
-            <p>② 尿中遊離コルチゾール（UFC）が正常上限以上</p>
+          <Block tone="blue" title="Ⅱ 検査所見">
+            <p>① 血中ACTHとコルチゾール（早朝8〜10時・30分安静後に同時測定）がともに高値〜正常（ACTHが抑制されていない）</p>
+            <p>② 24時間尿中遊離コルチゾールが高値（一般に <Em>70 μg/日以上</Em>／2022年4月からCLIA法で従来より幾分低値）</p>
           </Block>
-          <Block tone="gray" title="Ⅲ スクリーニング（コルチゾール自律分泌）">
-            <p>一晩少量デキサメタゾン抑制試験で翌朝コルチゾールが抑制されない</p>
-            <p>深夜睡眠時の血中コルチゾール ≥5 μg/dL（日内変動の消失）</p>
-            <p className="text-gray-400">（補助）DDAVP試験でACTHが前値の1.5倍以上に上昇 ※必須ではない・検査目的は保険適用外</p>
-            <p className="text-gray-500">※ 各カットオフの詳細は「クッシング」タブ・検査一覧を参照</p>
+          <Block tone="gray" title="Ⅲ スクリーニング検査">
+            <p>① 一晩少量（<Em>0.5mg</Em>）デキサメタゾン抑制試験：翌朝コルチゾールが抑制されない（<Em>≥5 μg/dL でクッシング病を疑う</Em>、≥3 μg/dL でサブクリニカルを疑う）</p>
+            <p>② 深夜睡眠時の血中コルチゾール <Em>≥5 μg/dL</Em>（周期性があるので可能なら複数日）</p>
+            <p className="text-gray-400">（補助）DDAVP 4μg静注でACTHが前値の1.5倍以上 ※検査目的は保険適用外</p>
+            <p className="text-gray-500">米国ガイドラインは1mg DSTでカットオフ1.8 μg/dL。CYP3A4誘導薬（リファンピシン・カルバマゼピン・フェニトイン）で偽陽性</p>
           </Block>
-          <Block tone="purple" title="Ⅳ 下垂体性（ACTH産生腺腫）の確定">
-            <p>① CRH試験：ACTHが前値の1.5倍以上に上昇</p>
-            <p>② 8mg デキサメタゾン抑制試験：コルチゾールが前値の半分以下に抑制</p>
-            <p>③ MRIで下垂体腺腫（微小腺腫が多く写らないことも多い）</p>
-            <p>④ 選択的静脈洞サンプリング（IPSS/CSS）：中枢/末梢ACTH比 ≥2（CRH後 ≥3）</p>
+          <Block tone="purple" title="Ⅳ 確定診断検査（異所性ACTH症候群との鑑別）">
+            <p>① CRH試験（100μg）：ACTH頂値が前値の<Em>1.5倍以上</Em></p>
+            <p>② 一晩大量（8mg）デキサメタゾン抑制試験：コルチゾールが前値の<Em>半分以下</Em></p>
+            <p>③ MRIで下垂体腫瘍（3テスラ推奨）</p>
+            <p>④ 選択的下錐体静脈洞サンプリング：ACTHの中枢/末梢比 <Em>≥2（CRH刺激後 ≥3）</Em>。<span className="text-yellow-300">MRIで腫瘍を認めない時は必ず行う</span></p>
+            <p className="text-gray-500">10mm以上の腫瘍・著明な高コルチゾール血症では①②が反応しないことあり</p>
           </Block>
           <Verdict>
-            <p><Em>確実例</Em>：Ⅰのいずれか ＋ Ⅱ・Ⅲ（DST・深夜コルチゾール）を満たし、さらに〔Ⅳ①または②〕かつ〔Ⅳ③または④〕</p>
-            <p className="mt-1">または Ⅰのいずれか ＋ Ⅱ・Ⅲを満たし、さらに摘出腫瘍の病理でACTH陽性／TPIT陽性腺腫を確認</p>
-            <p className="text-gray-400 mt-1">MRIで腺腫がはっきりしない時はIPSSで異所性ACTH症候群を除外</p>
+            <p><Em>確実例</Em>：Ⅰのいずれか ＋ Ⅱ・Ⅲのすべて ＋〔Ⅳ①または②〕かつ〔Ⅳ③または④〕</p>
+            <p className="mt-1">または Ⅰのいずれか ＋ Ⅱ・Ⅲのすべて ＋ 病理でACTH陽性／TPIT陽性</p>
+            <p className="mt-1"><Em>疑い例</Em>：Ⅰのいずれか ＋ Ⅱ・Ⅲのすべて</p>
           </Verdict>
-          <Point title="見逃し・誤診の注意">
-            <p>偽性クッシング（うつ病・アルコール多飲・重度肥満・コントロール不良糖尿病）は確定前に除外</p>
-            <p>周期性クッシングでは検査を繰り返す</p>
+          <Point title="注意">
+            <p>偽性クッシング（アルコール過量・CKD・うつ・高度肥満・コントロール不良糖尿病）の鑑別。IPSSでは区別できない</p>
+            <p>高コルチゾール血症が重度なら確定診断検査より治療を優先</p>
           </Point>
         </div>
       )}
@@ -126,72 +131,80 @@ export default function PituitaryGuide() {
       {/* ── 前葉機能低下症 ── */}
       {d === "前葉機能低下症" && (
         <div className="space-y-3">
-          <Block tone="red" title="ACTH分泌低下症（続発性副腎不全）">
-            <p><span className="text-red-300 font-semibold">症候</span>：易疲労感・脱力・食欲不振・体重減少・低血圧・低血糖・低Na血症</p>
-            <p><span className="text-red-300 font-semibold">検査</span>：早朝コルチゾール低値（&lt;4 μg/dL で強く疑う）＋ ACTHは低値〜基準内</p>
-            <p>CRH試験でACTHが低反応／ITT・CRH試験でコルチゾール頂値 &lt;18 μg/dL</p>
-            <p className="text-gray-500">迅速ACTH試験は発症早期だと正常反応しうる（偽陰性）</p>
+          <Block tone="red" title="ACTH分泌低下症">
+            <p><span className="text-red-300 font-semibold">症候</span>：易疲労感・脱力感・食欲不振/体重減少・消化器症状・血圧低下・精神症状・発熱・低血糖症状・関節痛</p>
+            <p>① 血中コルチゾール 正常低値〜低値</p>
+            <p>② 尿中遊離コルチゾール 正常低値〜低値</p>
+            <p>③ 血中ACTHは高値ではない（10 pg/mL以下が多いが、正常〜軽度高値の例もある）</p>
+            <p>④ CRH試験・ITT（血糖45 mg/dL以下で有効刺激）でACTH・コルチゾールが低〜無反応（<Em>コルチゾール反応 &lt;18 μg/dL</Em> で反応不良を疑う）</p>
+            <p>⑤ 迅速ACTH試験（250μg）でコルチゾールは低反応が多い</p>
+            <p className="text-green-300">確実例：症候1つ以上 ＋ ①〜④（⑤があればより確実）</p>
+            <p className="text-gray-500">除外：グルココルチコイド使用（内服・注射・外用・吸入・点眼・関節内）。原因として免疫チェックポイント阻害薬が増加</p>
           </Block>
           <Block tone="teal" title="TSH分泌低下症（中枢性甲状腺機能低下症）">
-            <p><Em>FT4低値なのにTSHが低値〜基準内（軽度高値もありうる）</Em>（TSHだけ見ると見逃す）</p>
-            <p className="text-gray-500">生物活性の低いTSHが測定されて軽度高値になることがある</p>
-            <p>TRH試験でTSHが低反応（視床下部性では遅延反応）</p>
+            <p><span className="text-teal-300 font-semibold">症候</span>：耐寒能低下・不活発・皮膚乾燥・徐脈・脱毛・発育障害</p>
+            <p>① 甲状腺ホルモン（特にFT4）低値</p>
+            <p>② <Em>TSHは低値〜軽度高値</Em>（腫瘍性では基準値内が多い＝TSHだけ見ると見逃す）</p>
+            <p>③ 間脳下垂体の器質性疾患・頭蓋内疾患の既往/治療歴・周産期異常</p>
+            <p>④ TRH試験でTSHが低〜無反応、または遷延/遅延反応</p>
+            <p className="text-green-300">確実例：症候1つ以上 ＋ ①②③、または 症候1つ以上 ＋ ①② ＋ ④（ほぼ確実例：①②）</p>
+            <p className="text-gray-500">非甲状腺疾患（low T3症候群）を除外</p>
           </Block>
           <Block tone="indigo" title="ゴナドトロピン分泌低下症">
-            <p>性ホルモン（テストステロン/エストラジオール）低値 ＋ LH・FSHが低値〜基準内</p>
-            <p>症候：無月経・性欲低下・ED・二次性徴の遅れ・恥毛/腋毛の脱落</p>
-            <p>GnRH試験で低反応</p>
+            <p><span className="text-indigo-300 font-semibold">症候</span>：二次性徴の欠如（男子15歳以上・女子14歳以上）/進行停止・月経異常・性欲低下/ED/不妊・陰毛腋毛の脱落/性器萎縮</p>
+            <p>① LH・FSHは高値ではない ② LHRH等の刺激試験で低〜無反応 ③ 性ホルモン低値</p>
+            <p className="text-green-300">確実例：症候のいずれか ＋ ①〜③すべて</p>
+            <p className="text-gray-500">除外：薬剤・高度肥満・神経性やせ症</p>
           </Block>
           <Block tone="sky" title="成人GH分泌不全症">
-            <p>症候：疲れやすさ・意欲低下・内臓脂肪増加・脂質異常・骨密度低下</p>
-            <p>負荷試験のGH頂値：<Em>ITT・アルギニン・グルカゴン ≤3 ng/mL</Em>（重症 ≤1.8）／<Em>GHRP-2 ≤9 ng/mL</Em>（重症）</p>
-            <p>原則2種類の負荷試験で確認（器質的疾患があり、GHを含めて複数の下垂体ホルモン分泌低下がある場合は1種類で可）</p>
+            <p>前提：小児期発症（成長障害）または頭蓋内器質性疾患の合併/既往/治療歴・周産期異常</p>
+            <p>GH頂値：<Em>ITT・アルギニン・グルカゴン ≤3 ng/mL</Em>／<Em>GHRP-2 ≤9 ng/mL</Em></p>
+            <p><span className="text-sky-300 font-semibold">重症</span>（GH補充の保険適用）：ITT等 <Em>≤1.8 ng/mL</Em>（GHRP-2は ≤9）</p>
+            <p>原則2種類の試験で基準を満たす。器質性疾患等があり、GHを含め複数の下垂体ホルモン分泌低下があれば1種類で可</p>
+            <p className="text-gray-500">まずITTかGHRP-2。ITTは虚血性心疾患・痙攣発作で禁忌。甲状腺機能低下・高齢・肥満などで偽性低反応</p>
           </Block>
           <Block tone="pink" title="PRL分泌低下症">
-            <p>産褥期の乳汁分泌低下（Sheehan症候群を疑う）・PRL低値</p>
+            <p>産褥期の乳汁分泌低下 ＋ PRL基礎値低下（複数回）＋ TRH試験でPRL低〜無反応</p>
           </Block>
           <Point title="補充の順番（最重要）">
             <p><Em>ACTH欠損があれば、甲状腺ホルモンより先にヒドロコルチゾンを開始</Em>（逆だと副腎クリーゼを誘発）</p>
-            <p>原因検索：腫瘍・術後/放射線後・下垂体卒中・リンパ球性下垂体炎・<Em>免疫チェックポイント阻害薬</Em>・IgG4関連・頭部外傷</p>
+            <p>副腎不全の症状が明らかなら検査より治療を優先</p>
           </Point>
         </div>
       )}
 
-      {/* ── AVP欠乏症（中枢性尿崩症） ── */}
-      {d === "AVP欠乏症" && (
+      {/* ── 尿崩症 ── */}
+      {d === "尿崩症" && (
         <div className="space-y-3">
-          <p className="text-xs text-gray-500 px-1">2023年に「中枢性尿崩症」から「AVP欠乏症」へ名称変更</p>
+          <p className="text-xs text-gray-500 px-1">原典の名称は「バソプレシン分泌低下症（中枢性尿崩症）」。学会は「AVP欠乏症」への名称変更を提唱</p>
           <Block tone="cyan" title="Ⅰ 主症候">
-            <p>① 口渇 ② 多飲 ③ 多尿（成人で尿量 ≥3,000 mL/日）</p>
+            <p>① 口渇 ② 多飲 ③ 多尿</p>
           </Block>
           <Block tone="blue" title="Ⅱ 検査所見">
-            <p>① 尿浸透圧 &lt;300 mOsm/kg（低張尿）</p>
-            <p>② 高張食塩水負荷で血漿浸透圧上昇に対するAVP分泌が低下</p>
-            <p>③ 水制限試験でも尿浸透圧が300 mOsm/kgを超えない</p>
-            <p>④ バソプレシン投与で尿浸透圧が上昇（300 mOsm/kg以上）<span className="text-gray-500">※診断目的にデスモプレシンで代用しない（水中毒の危険）</span></p>
+            <p>① 尿量：成人 <Em>≥3,000 mL/日 または ≥40 mL/kg</Em>（小児 ≥2,000 mL/m²）</p>
+            <p>② 尿浸透圧 <Em>≤300 mOsm/kg</Em></p>
+            <p>③ 高張食塩水負荷（5%・0.05 mL/kg/分・120分）で血漿浸透圧が高くてもAVP分泌が低下（Na–AVP回帰直線の傾き &lt;0.1、またはNa 149 mEq/L時の推定AVP &lt;1.0 pg/mL）</p>
+            <p>④ 水制限試験（体重3%減少または6.5時間で終了）でも尿浸透圧が300 mOsm/kgを超えない</p>
+            <p>⑤ バソプレシン負荷（ピトレシン5単位皮下注）で尿量が減り、尿浸透圧 ≥300 mOsm/kg に上昇<span className="text-gray-500">（水制限試験の後に行う。デスモプレシンでの代用は水中毒の危険があり推奨されない）</span></p>
           </Block>
           <Block tone="gray" title="Ⅲ 参考所見">
-            <p>MRI T1強調で下垂体後葉の高信号消失</p>
-            <p>血漿浸透圧は正常上限〜高値（心因性多飲では低め・低Na傾向）</p>
+            <p>血清Naは正常上限か、やや上回ることが多い</p>
+            <p>MRI T1強調で下垂体後葉の輝度低下（高齢者は尿崩症でなくても低下しうる）</p>
           </Block>
           <Verdict>
-            <p><Em>確実例</Em>：Ⅰ ＋ 次のどちらかの経路</p>
-            <p>〔Ⅱ① 低張尿 ＋ Ⅱ② 高張食塩水負荷でAVP低反応〕</p>
-            <p>〔Ⅱ① 低張尿 ＋ Ⅱ③ 水制限 ＋ Ⅱ④ AVP負荷で尿濃縮〕</p>
-            <p className="text-yellow-300 mt-1">⚠️ 著明な脱水（Na ≥150 mEq/Lなど）では高張食塩水負荷・水制限を行わない</p>
+            <p><Em>確実例</Em>：Ⅰのすべて ＋〔Ⅱ①②③〕または〔Ⅱ①②④⑤〕</p>
+            <p className="text-yellow-300 mt-1">⚠️ 著明な脱水（Na ≥150 mEq/Lなど）では高張食塩水負荷・水制限を行わない。尿量が非常に多い（10,000 mL/日など）時は高張食塩水負荷を優先</p>
           </Verdict>
           <div className="rounded-xl border border-gray-700 bg-gray-800/40 p-3 text-xs">
             <p className="font-bold text-white mb-2">多尿の鑑別</p>
             <div className="grid grid-cols-3 gap-2">
-              <Mini title="AVP欠乏症" tone="text-cyan-300" lines={["AVP分泌↓", "AVP投与で尿濃縮↑"]} />
-              <Mini title="AVP抵抗症（腎性）" tone="text-yellow-300" lines={["AVP分泌↑", "AVP投与に無反応", "リチウム・高Ca・低K"]} />
-              <Mini title="心因性多飲" tone="text-gray-300" lines={["AVP反応は正常", "血漿浸透圧↓"]} />
+              <Mini title="中枢性尿崩症" tone="text-cyan-300" lines={["高張食塩水でAVP↑なし", "バソプレシンで尿濃縮↑"]} />
+              <Mini title="腎性尿崩症" tone="text-yellow-300" lines={["バソプレシンに無反応", "リチウム・高Ca・低K・腎疾患"]} />
+              <Mini title="心因性多飲" tone="text-gray-300" lines={["高張食塩水でAVP↑", "水制限で尿濃縮↑"]} />
             </div>
-            <p className="text-gray-500 mt-2">先に浸透圧利尿（高血糖など）を除外</p>
           </div>
           <Point title="治療の注意">
             <p>デスモプレシン開始後は<Em>水中毒・低Na血症</Em>に注意（飲水指導と血清Naフォロー）</p>
-            <p>口渇感のない例（渇中枢障害）は特に高Na/低Naが起きやすい</p>
           </Point>
         </div>
       )}
@@ -200,48 +213,52 @@ export default function PituitaryGuide() {
       {d === "TSH産生腫瘍" && (
         <div className="space-y-3">
           <Block tone="teal" title="Ⅰ 主症候">
-            <p>甲状腺中毒症状（動悸・体重減少・発汗）・びまん性甲状腺腫・頭痛/視野障害（マクロ腺腫）</p>
+            <p>① 甲状腺中毒症状（動悸・頻脈・発汗増加・体重減少／軽微〜中等症が多い）</p>
+            <p>② びまん性甲状腺腫大</p>
+            <p>③ 腫瘍による症状（頭痛・視野障害）</p>
           </Block>
           <Block tone="blue" title="Ⅱ 検査所見">
-            <p>① <Em>FT4（FT3）高値なのにTSHが抑制されない</Em>（基準内〜高値＝SITSH）</p>
-            <p>② MRIで下垂体腺腫を認める</p>
-            <p>③ TRH試験でTSHが無〜低反応（参考）／αサブユニット高値</p>
+            <p>① <Em>FT4高値にもかかわらずTSHは正常値〜軽度高値</Em>（SITSH）</p>
+            <p>② 画像で下垂体腫瘍</p>
+            <p>③ 摘出腫瘍の免疫染色でTSHβまたはTSH陽性</p>
+          </Block>
+          <Block tone="gray" title="Ⅲ 参考所見">
+            <p>TRH試験でTSHは無〜低反応（頂値が前値の<Em>2倍以下</Em>）の例が多い</p>
+            <p>GH・PRLの同時過剰、他の前葉ホルモン低下を伴うことがある</p>
           </Block>
           <Verdict>
-            <p><Em>ほぼ確実例</Em>：Ⅰ ＋ Ⅱの①② ＋ 甲状腺ホルモン不応症の除外</p>
-            <p className="mt-1"><Em>確実例</Em>：上記 ＋ 摘出腫瘍でTSHβ（TSH）免疫染色陽性</p>
+            <p><Em>確実例</Em>：Ⅰのいずれか ＋ Ⅱのすべて</p>
+            <p className="mt-1"><Em>ほぼ確実例</Em>：Ⅰのいずれか ＋ Ⅱ①②</p>
+            <p className="text-gray-400 mt-1">鑑別：甲状腺ホルモン不応症</p>
           </Verdict>
-          <div className="rounded-xl border border-gray-700 bg-gray-800/40 p-3 text-xs">
-            <p className="font-bold text-white mb-2">SITSHの鑑別</p>
-            <div className="grid grid-cols-2 gap-2">
-              <Mini title="TSH産生腫瘍" tone="text-teal-300" lines={["MRIで腺腫", "TRHに無〜低反応", "αサブユニット↑", "家族歴なし"]} />
-              <Mini title="甲状腺ホルモン不応症" tone="text-gray-300" lines={["TRHに正常〜過剰反応", "αサブユニット正常", "家族歴が多い", "THRB変異が多い"]} />
-            </div>
-            <p className="text-yellow-300 mt-2">家族歴・THRB変異がない不応症や、非機能性腺腫を偶然合併する不応症もある（決め手にしない）</p>
-            <p className="text-gray-500 mt-2">まず測定系の干渉（抗T4抗体・異好性抗体・ビオチン）を除外</p>
-          </div>
+          <Point title="見かけ上のSITSH・不応症との鑑別">
+            <p>家族性異常アルブミン性高サイロキシン血症・抗T4/T3抗体・異種抗体（抗マウスIgG抗体など）・アミオダロン内服</p>
+            <p>不応症はTHRβ遺伝子診断が役立つが、<Em>既知の変異がない不応症</Em>や、<Em>非機能性下垂体腫瘍を偶然合併する不応症</Em>もあり鑑別は容易でない</p>
+          </Point>
         </div>
       )}
 
       {/* ── 偶発腫・下垂体卒中 ── */}
       {d === "偶発腫・卒中" && (
         <div className="space-y-3">
-          <Block tone="gray" title="下垂体偶発腫を見つけたら">
-            <p>全例：PRL・IGF-1・早朝ACTH/コルチゾール・TSH/FT4・LH/FSH/性ホルモン・Na</p>
-            <p>マクロ腺腫（≥10mm）・視交叉に接する：視野検査</p>
-            <p>非機能性・無症候なら画像と機能のフォロー（増大・視野障害・機能低下で手術検討）</p>
+          <Block tone="gray" title="下垂体偶発腫（インシデンタローマ）">
+            <p><span className="text-white font-semibold">内分泌検査</span>（早朝空腹時の基礎値）：GH・IGF-1・PRL・TSH・FT4・ACTH・コルチゾール・LH・FSH・テストステロン（男）/E2（女）→ 必要時に負荷試験</p>
+            <p><span className="text-white font-semibold">眼科的検査</span>で視機能障害の有無</p>
+            <p><span className="text-white font-semibold">非機能性の方針</span>：視神経・視交叉の圧迫＋視機能障害 → 手術推奨／接触・圧迫だが障害なし → 相対的手術適応／海綿静脈洞・蝶形骨洞への浸潤や増大、下垂体機能低下症がある例は年齢などを考慮して手術を提案／それ以外は原則経過観察</p>
+            <p><span className="text-white font-semibold">経過観察</span>：3か月後 → その6か月後 → 以後1年ごとにMRIとホルモン基礎値。増大が明らかなら手術を考慮</p>
           </Block>
           <Block tone="red" title="下垂体卒中（救急）">
             <p><span className="text-red-300 font-semibold">症候</span>：突然の激しい頭痛・視力/視野障害・眼球運動障害（複視・眼瞼下垂）・嘔吐・意識障害</p>
             <p><span className="text-red-300 font-semibold">画像</span>：MRI（腺腫内の出血・梗塞）</p>
             <p><Em>急性副腎不全を想定し、採血後すぐにヒドロコルチゾンを投与（結果を待たない）</Em></p>
             <p>視力低下・意識障害が進む例は脳神経外科と緊急減圧を検討</p>
+            <p className="text-gray-500">※ 下垂体卒中は原典に独立した診断の手引きはない（一般的な対応）</p>
           </Block>
         </div>
       )}
 
       <div className="rounded-xl bg-gray-900/60 border border-gray-800 p-3 text-xs text-gray-500 space-y-1">
-        <p>出典：厚生労働科学研究費補助金 間脳下垂体機能障害に関する調査研究班『間脳下垂体機能障害と先天性腎性尿崩症および関連疾患の診療ガイドライン2023年版』（診断と治療の手引き 令和4年度改訂を収載）、Acromegaly国際コンセンサス2024ほか。</p>
+        <p>出典：厚生労働科学研究費補助金 間脳下垂体機能障害に関する調査研究班『間脳下垂体機能障害と先天性腎性尿崩症および関連疾患の診療ガイドライン2023年版』（日本内分泌学会雑誌 Vol.99 Suppl. 2023）。「原典外」と記した項目のみ他資料（Acromegaly国際コンセンサス2024など）。</p>
         <p>要点を抜き出したもので、細目・注釈は原典をご確認ください。基準値・カットオフは測定系や施設により異なります。</p>
       </div>
     </div>
