@@ -1,7 +1,8 @@
 "use client";
 import { useState } from "react";
+import PituitaryGuide from "./PituitaryGuide";
 
-type GuideTab = "ホルモン軸" | "副腎腫瘤" | "クッシング" | "PA" | "褐色細胞腫" | "遺伝性MEN" | "低Na鑑別";
+type GuideTab = "ホルモン軸" | "下垂体" | "副腎腫瘤" | "クッシング" | "PA" | "褐色細胞腫" | "遺伝性MEN" | "低Na鑑別";
 
 export default function GuideView() {
   const [tab, setTab] = useState<GuideTab>("ホルモン軸");
@@ -10,7 +11,7 @@ export default function GuideView() {
     <div className="space-y-4">
       {/* サブタブ */}
       <div className="flex gap-2 overflow-x-auto pb-1">
-        {(["ホルモン軸", "副腎腫瘤", "クッシング", "PA", "褐色細胞腫", "遺伝性MEN", "低Na鑑別"] as GuideTab[]).map(t => (
+        {(["ホルモン軸", "下垂体", "副腎腫瘤", "クッシング", "PA", "褐色細胞腫", "遺伝性MEN", "低Na鑑別"] as GuideTab[]).map(t => (
           <button
             key={t}
             onClick={() => setTab(t)}
@@ -119,6 +120,9 @@ export default function GuideView() {
           ))}
         </div>
       )}
+
+      {/* ── 下垂体疾患 診断基準 ── */}
+      {tab === "下垂体" && <PituitaryGuide />}
 
       {/* ── 副腎腫瘤 鑑別フロー ── */}
       {tab === "副腎腫瘤" && (
